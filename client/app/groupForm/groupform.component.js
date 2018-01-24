@@ -12,36 +12,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
-var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent(router, userService, alertService) {
+var GroupformComponent = /** @class */ (function () {
+    function GroupformComponent(router, groupService, alertService) {
         this.router = router;
-        this.userService = userService;
+        this.groupService = groupService;
         this.alertService = alertService;
         this.model = {};
         this.loading = false;
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
-    RegisterComponent.prototype.register = function () {
+    GroupformComponent.prototype.createGroup = function () {
         var _this = this;
         this.loading = true;
-        this.userService.create(this.model)
+        this.model.adminname = this.currentUser.username;
+        this.groupService.create(this.model)
             .subscribe(function (data) {
-            _this.alertService.success('Inscription réussie', true);
-            _this.router.navigate(['/login']);
+            _this.alertService.success('Création réussie', true);
+            _this.router.navigate(['/mygroups']);
         }, function (error) {
             _this.alertService.error(error);
             _this.loading = false;
         });
     };
-    RegisterComponent = __decorate([
+    GroupformComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            templateUrl: 'register.component.html'
+            templateUrl: 'groupform.component.html'
         }),
         __metadata("design:paramtypes", [router_1.Router,
-            index_1.UserService,
+            index_1.GroupService,
             index_1.AlertService])
-    ], RegisterComponent);
-    return RegisterComponent;
+    ], GroupformComponent);
+    return GroupformComponent;
 }());
-exports.RegisterComponent = RegisterComponent;
-//# sourceMappingURL=register.component.js.map
+exports.GroupformComponent = GroupformComponent;
+//# sourceMappingURL=groupform.component.js.map

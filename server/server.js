@@ -25,6 +25,7 @@ app.use(expressJwt({
 
 // routes
 app.use('/users', require('./controllers/users.controller'));
+app.use('/groups', require('./controllers/groups.controller'))
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -38,5 +39,5 @@ app.use(function (err, req, res, next) {
 // start server
 var port = process.env.NODE_ENV === 'production' ? 80 : 4000;
 var server = app.listen(port, function () {
-    console.log('Server listening on port ' + port);
+    console.log('Serveur démarré sur le port ' + port);
 });

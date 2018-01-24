@@ -1,0 +1,14 @@
+<div>
+    <h1>Bonjour {{currentUser.username}}!</h1>
+    <ul *ngIf="groups">
+        <li *ngFor="let group of groups">
+            <div *ngIf="currentUser && group.adminname === currentUser.username">
+            {{group.groupname}} by {{group.adminname}}
+            - <a (click)="deleteGroup(group._id)">Delete</a>
+            </div>
+        </li>
+    </ul>
+    <span *ngIf="!groups">Vous n'avez aucun groupe ...</span>
+    <p><a [routerLink]="['/group/create']">Créer un groupe</a></p>
+    <p><a [routerLink]="['']">Accueil</a></p>
+</div>
