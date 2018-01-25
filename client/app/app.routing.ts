@@ -5,7 +5,8 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { AuthGuard } from './_guards/index';
 import {MygroupsComponent} from "./mygroups/index";
-import {GroupformComponent} from "./groupForm/groupform.component";
+import {GroupformComponent} from "./groupform/index";
+import {GroupdetailsComponent} from "./groupdetails/index";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -13,6 +14,8 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'mygroups', component: MygroupsComponent},
     { path: 'group/create', component: GroupformComponent},
+    { path: 'group', component: GroupdetailsComponent},
+
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

@@ -10,6 +10,9 @@ var core_1 = require("@angular/core");
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this.IMAGE_URL = require('../ressources/logo.png');
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

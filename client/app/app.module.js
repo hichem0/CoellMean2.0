@@ -21,7 +21,8 @@ var index_6 = require("./login/index");
 var index_7 = require("./register/index");
 var index_8 = require("./mygroups/index");
 var group_service_1 = require("./_services/group.service");
-var groupform_component_1 = require("./groupForm/groupform.component");
+var index_9 = require("./groupform/index");
+var index_10 = require("./groupdetails/index");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -40,7 +41,8 @@ var AppModule = /** @class */ (function () {
                 index_6.LoginComponent,
                 index_7.RegisterComponent,
                 index_8.MygroupsComponent,
-                groupform_component_1.GroupformComponent
+                index_9.GroupformComponent,
+                index_10.GroupdetailsComponent
             ],
             providers: [
                 index_2.AuthGuard,

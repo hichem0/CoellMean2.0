@@ -84,7 +84,7 @@ function update(_id, groupParam) {
     var deferred = Q.defer();
 
     // validation
-    db.groups.findById(_id, function (err, user) {
+    db.groups.findById(_id, function (err, group) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
         if (group.groupname !== groupParam.groupname) {
@@ -110,7 +110,8 @@ function update(_id, groupParam) {
         // fields to update
         var set = {
             adminname: groupParam.adminname,
-            groupname: groupParam.groupname
+            groupname: groupParam.groupname,
+            users : groupParam.users
         };
 
         db.groups.update(

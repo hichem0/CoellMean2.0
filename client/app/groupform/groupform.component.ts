@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AlertService, GroupService } from '../_services/index';
-import {User} from "../_models";
+import {Group, User} from "../_models/index";
 
 @Component({
     moduleId: module.id,
     templateUrl: 'groupform.component.html'
 })
 
-export class GroupformComponent {
-    model: any = {};
+export class GroupformComponent implements OnInit{
+    group: any = {};
     loading = false;
     currentUser: User;
 
@@ -19,13 +19,17 @@ export class GroupformComponent {
         private groupService: GroupService,
         private alertService: AlertService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    }
+
+    ngOnInit(): void {
 
     }
 
     createGroup() {
         this.loading = true;
-        this.model.adminname = this.currentUser.username;
-        this.groupService.create(this.model)
+        this.group.adminname = this.currentUser.username;
+        this.group.users = [];
+        this.groupService.create(this.group)
             .subscribe(
                 data => {
                     this.alertService.success('Création réussie', true);

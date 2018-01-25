@@ -10,10 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var group_service_1 = require("../_services/group.service");
+var index_1 = require("../_services/index");
+var router_1 = require("@angular/router");
 var MygroupsComponent = /** @class */ (function () {
-    function MygroupsComponent(groupService) {
+    function MygroupsComponent(groupService, router, activatedRoute) {
         this.groupService = groupService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
         this.groups = [];
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
@@ -28,12 +31,19 @@ var MygroupsComponent = /** @class */ (function () {
         var _this = this;
         this.groupService.getAll().subscribe(function (groups) { _this.groups = groups; });
     };
+    MygroupsComponent.prototype.goToGroupDetails = function (groupname) {
+        var queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+        queryParams['groupname'] = groupname;
+        this.router.navigate(['/group'], { queryParams: queryParams });
+    };
     MygroupsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             templateUrl: 'mygroups.component.html'
         }),
-        __metadata("design:paramtypes", [group_service_1.GroupService])
+        __metadata("design:paramtypes", [index_1.GroupService,
+            router_1.Router,
+            router_1.ActivatedRoute])
     ], MygroupsComponent);
     return MygroupsComponent;
 }());

@@ -15,7 +15,8 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import {MygroupsComponent} from "./mygroups/index";
 import {GroupService} from "./_services/group.service";
-import {GroupformComponent} from "./groupForm/groupform.component";
+import {GroupformComponent} from "./groupform/index";
+import {GroupdetailsComponent} from "./groupdetails/index";
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import {GroupformComponent} from "./groupForm/groupform.component";
         LoginComponent,
         RegisterComponent,
         MygroupsComponent,
-        GroupformComponent
+        GroupformComponent,
+        GroupdetailsComponent
     ],
     providers: [
         AuthGuard,

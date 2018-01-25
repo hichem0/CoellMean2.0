@@ -3,7 +3,7 @@
     <form name="form" (ngSubmit)="f.form.valid && createGroup()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !groupname.valid }">
             <label for="groupname">Nom du groupe</label>
-            <input type="text" class="form-control" name="groupname" [(ngModel)]="model.groupname" #groupname="ngModel" required />
+            <input type="text" class="form-control" name="groupname" [(ngModel)]="group.groupname" #groupname="ngModel" required />
             <div *ngIf="f.submitted && !groupname.valid" class="help-block">Nom de groupe requis</div>
         </div>
         <div class="form-group">

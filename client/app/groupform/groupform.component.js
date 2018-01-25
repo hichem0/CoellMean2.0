@@ -17,15 +17,18 @@ var GroupformComponent = /** @class */ (function () {
         this.router = router;
         this.groupService = groupService;
         this.alertService = alertService;
-        this.model = {};
+        this.group = {};
         this.loading = false;
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
+    GroupformComponent.prototype.ngOnInit = function () {
+    };
     GroupformComponent.prototype.createGroup = function () {
         var _this = this;
         this.loading = true;
-        this.model.adminname = this.currentUser.username;
-        this.groupService.create(this.model)
+        this.group.adminname = this.currentUser.username;
+        this.group.users = [];
+        this.groupService.create(this.group)
             .subscribe(function (data) {
             _this.alertService.success('Création réussie', true);
             _this.router.navigate(['/mygroups']);
