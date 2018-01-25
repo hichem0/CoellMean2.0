@@ -1,0 +1,105 @@
+.page {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    background-color: rgba(0, 56, 149, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.block1 {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.block1 .sous-block1 {
+    width: 50%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.block1 .sous-block2 {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.vocabulaire {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    background-color: white;
+}
+
+.traduction {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    background-color: white;
+}
+
+.grammaire {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    background-color: white;
+}
+
+.ideeglobale {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    background-color: white;
+}
+
+.argumentation {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    background-color: white;
+}
+
+.lien {
+    width: 95%;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;
+    background-color: white;
+}
+
+.block2 {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-primary {
+    background-color: green;
+}

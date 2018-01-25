@@ -13,6 +13,11 @@ import { AlertService, AuthenticationService, UserService } from './_services/in
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
+import {MygroupsComponent} from "./mygroups/index";
+import {GroupService} from "./_services/group.service";
+import {GroupformComponent} from "./groupform/index";
+import {GroupdetailsComponent} from "./groupdetails/index";
+import {ExerciceformComponent} from "./exerciceform/index";
 
 @NgModule({
     imports: [
@@ -26,13 +31,18 @@ import { RegisterComponent } from './register/index';
         AlertComponent,
         HomeComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        MygroupsComponent,
+        GroupformComponent,
+        GroupdetailsComponent,
+        ExerciceformComponent,
     ],
     providers: [
         AuthGuard,
         AlertService,
         AuthenticationService,
         UserService,
+        GroupService,
         JwtInterceptorProvider,
         ErrorInterceptorProvider
     ],

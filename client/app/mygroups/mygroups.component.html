@@ -1,0 +1,17 @@
+<link href="mygroups.component.css" rel="stylesheet" />
+<div>
+    <h1>Bonjour {{currentUser.username}}!</h1>
+
+    <div class="groups-container" *ngIf="groups">
+        <div *ngFor="let group of groups">
+            <div class="group-card" *ngIf="currentUser && group.adminname === currentUser.username" (click)="goToGroupDetails(group.groupname)">
+                <h2>{{group.groupname}}</h2>
+                par {{group.adminname}}
+                <div><a (click)="deleteGroup(group._id)">X</a></div>
+            </div>
+        </div>
+    </div>
+    <span *ngIf="!groups">Vous n'avez aucun groupe ...</span>
+    <p><a [routerLink]="['/group/create']">Créer un groupe</a></p>
+    <p><a [routerLink]="['']">Accueil</a></p>
+</div>

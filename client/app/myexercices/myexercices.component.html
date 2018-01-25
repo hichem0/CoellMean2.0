@@ -1,0 +1,17 @@
+<link href="myexercices.component.css" rel="stylesheet" />
+<div>
+    <h1>Exercices créés par {{currentUser.username}}!</h1>
+
+    <div class="exercices-container" *ngIf="exercices">
+        <div *ngFor="let exercice of exercices">
+            <div class="exercice-card" *ngIf="currentUser && exercice.createur === currentUser.username" (click)="goToExerciceDetails(exercice.titre)">
+                <h2>{{exercice.titre}}</h2>
+                par {{exercice.createur}}
+                <div><a (click)="deleteExercice(exercice._id)">X</a></div>
+            </div>
+        </div>
+    </div>
+    <span *ngIf="!exercices">Vous avez créé aucun exercice ...</span>
+    <p><a [routerLink]="['/exercice/create']">Créer un exercice</a></p>
+    <p><a [routerLink]="['']">Accueil</a></p>
+</div>

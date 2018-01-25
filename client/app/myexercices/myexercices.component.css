@@ -1,0 +1,19 @@
+.exercices-container {
+    width: 800px;
+    height: 300px;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+}
+
+.exercice-card {
+    width: 250px;
+    height: 170px;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 3px 3px 10px;    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}

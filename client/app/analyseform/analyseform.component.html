@@ -1,0 +1,138 @@
+<link href="analyseform.component.css" rel="stylesheet" />
+<div class="page">
+    <form name="form" (ngSubmit)="f.form.valid && createAnalyse()" #f="ngForm" novalidate>
+        <div class="title">
+            <div *ngIf="exercice && exercice.titre"><h2>Titre : {{exercice.titre}}</h2></div>
+        </div>
+        <div class="block1">
+            <div class="sous-block1">
+                <div *ngIf="exercice && exercice.contenu"><h2>Article : {{exercice.contenu}}</h2></div>
+            </div>
+            <div class="sous-block2">
+                <div class="vocabulaire">
+                    <h2 *ngIf="exercice && exercice.noteVocabulaire">Vocabulaire : {{exercice.noteVocabulaire}} Points</h2>
+                    <span>(Sélectionnez 15 à 20 mots et trouvez-leur un synonyme)</span>
+                    <div>
+                        <input type="text" name="motS" ng-model="motS" [(ngModel)]="motS" placeholder="Mot"/>
+                        <input type="text" name="syn" ng-model="syn" [(ngModel)]="syn" placeholder="Synonyme"/>
+                        <span (click)="addVoc()"> ajouter ( + )<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></span>
+                    </div>
+                    <div>
+                        Vos réponses :
+                        <div *ngIf="vocabulaire.length">
+                            <ol>
+                            <div *ngFor="let item of vocabulaire">
+                                <li>{{item.mot1}} -> {{item.mot2}}</li>
+                            </div>
+                            </ol>
+                        </div>
+                        <div *ngIf="!vocabulaire.length">
+                            Aucune réponse ...
+                        </div>
+                    </div>
+                </div>
+                <div class="traduction">
+                    <h2 *ngIf="exercice && exercice.noteTraduction">Traduction : {{exercice.noteTraduction}} Points</h2>
+                    <span>(Depuis la langue de l’article vers votre langue)</span>
+                    <div>
+                        <input type="text" name="motT" ng-model="motT" [(ngModel)]="motT" placeholder="Mot"/>
+                        <input type="text" name="trad" ng-model="trad" [(ngModel)]="trad" placeholder="Traduction"/>
+                        <span (click)="addTrad()"> ajouter ( + )<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></span>
+                    </div>
+                    <div>
+                        Vos réponses :
+                        <div *ngIf="traduction.length">
+                            <ol>
+                                <div *ngFor="let item of traduction">
+                                    <li>{{item.mot1}} -> {{item.mot2}}</li>
+                                </div>
+                            </ol>
+                        </div>
+                        <div *ngIf="!traduction.length">
+                            Aucune réponse ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block2">
+            <div class="grammaire">
+                <h2 *ngIf="exercice && exercice.noteGrammaire">Grammaire : {{exercice.noteGrammaire}} Points</h2>
+                <span>(Choisissez 4 phrases et analysez les accords, styles et conjugaisons)</span>
+                <div>
+                    <input type="text" name="motG" ng-model="motG" [(ngModel)]="motG" placeholder="Phrase"/>
+                    <input type="text" name="anaG" ng-model="anaG" [(ngModel)]="anaG" placeholder="Accords, styles, conjugaisons ..."/>
+                    <span (click)="addGramm()"> ajouter ( + )<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></span>
+                </div>
+                <div>
+                    Vos réponses :
+                    <div *ngIf="grammaire.length">
+                        <ol>
+                            <div *ngFor="let item of grammaire">
+                                <li>{{item.mot1}} -> {{item.mot2}}</li>
+                            </div>
+                        </ol>
+                    </div>
+                    <div *ngIf="!grammaire.length">
+                        Aucune réponse ...
+                    </div>
+                </div>
+            </div>
+            <div class="ideeglobale">
+                <h2 *ngIf="exercice && exercice.noteIG">Idées Globales : {{exercice.noteIG}} Points</h2>
+                <span>(Listez 5 à 8 idées clés ayant un lien logique pour résumer l’article)</span>
+                <div>
+                    <input type="text" name="ig" ng-model="ig" [(ngModel)]="ig" placeholder="Idée clé"/>
+                    <span (click)="addIG()"> ajouter ( + )<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></span>
+                </div>
+                <div>
+                    Vos réponses :
+                    <div *ngIf="ideeGlobales.length">
+                        <ol>
+                            <div *ngFor="let item of ideeGlobales">
+                                <li>{{item}}</li>
+                            </div>
+                        </ol>
+                    </div>
+                    <div *ngIf="!ideeGlobales.length">
+                        Aucune réponse ...
+                    </div>
+                </div>
+            </div>
+            <div class="argumentation">
+                <h2 *ngIf="exercice && exercice.noteArgumentation">Analyse/argumentation : {{exercice.noteArgumentation}} Points</h2>
+                <span>(Apportez une nouvelle analyse sur l’article étudié)</span>
+                <div>
+                    <span class="form-group" [ngClass]="{ 'has-error': f.submitted }">
+                        <input type="textarea" class="form-control" name="argumentation" [(ngModel)]="analyse.argumentation" #argumentation="ngModel"/>
+                    </span>
+                </div>
+            </div>
+            <div class="lien">
+                <h2 *ngIf="exercice && exercice.noteLiens">Liens Externes : {{exercice.noteLiens}} Points</h2>
+                <span>(Enumérez les liens/sources utilisés lors de votre analyse d’article)</span>
+                <div>
+                    <input type="text" name="lien" ng-model="lien" [(ngModel)]="lien" placeholder="Idée clé"/>
+                    <span (click)="addLink()"> ajouter ( + )<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></span>
+                </div>
+                <div>
+                    Vos réponses :
+                    <div *ngIf="liens.length">
+                        <ol>
+                            <div *ngFor="let item of liens">
+                                <li> <a href="{{item}}" target="_blank">{{item}}</a></li>
+                            </div>
+                        </ol>
+                    </div>
+                    <div *ngIf="!liens.length">
+                        Aucune réponse ...
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">Valider</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,72 @@
+<div class="col-md-6 col-md-offset-3">
+    <h2>Création d'un exercice</h2>
+    <form name="form" (ngSubmit)="f.form.valid && createExercice()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !titre.valid }">
+            <label for="titre">Titre de l'article</label>
+            <input type="text" class="form-control" name="titre" [(ngModel)]="exercice.titre" #titre="ngModel" required />
+            <div *ngIf="f.submitted && !titre.valid" class="help-block">Titre requis</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contenu.valid }">
+            <label for="contenu">Contenu de l'article</label>
+            <input type="textarea" class="form-control" name="contenu" [(ngModel)]="exercice.contenu" #contenu="ngModel" required />
+            <div *ngIf="f.submitted && !contenu.valid" class="help-block">Contenu requis</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !datePublication.valid }">
+            <label for="datePublication">Date de publication</label>
+            <input type="text" class="form-control" name="datePublication" [(ngModel)]="exercice.datePublication" #datePublication="ngModel" required />
+            <div *ngIf="f.submitted && !datePublication.valid" class="help-block">Date de publication requise</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !source.valid }">
+            <label for="source">Source de l'article</label>
+            <input type="text" class="form-control" name="source" [(ngModel)]="exercice.source" #source="ngModel" required />
+            <div *ngIf="f.submitted && !source.valid" class="help-block">Source requise</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !domaine.valid }">
+            <label for="domaine">Domaine traité</label>
+            <input type="text" class="form-control" name="domaine" [(ngModel)]="exercice.domaine" #domaine="ngModel" required />
+            <div *ngIf="f.submitted && !domaine.valid" class="help-block">Domaine requis</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !langue.valid }">
+            <label for="langue">Langue de l'article</label>
+            <input type="text" class="form-control" name="langue" [(ngModel)]="exercice.langue" #langue="ngModel" required />
+            <div *ngIf="f.submitted && !langue.valid" class="help-block">Langue requise</div>
+        </div>
+        <div><div><h2>Notes</h2></div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !noteVocabulaire.valid }">
+                <label for="noteVocabulaire">Vocabulaire</label>
+                <input type="text" class="form-control" name="noteVocabulaire" [(ngModel)]="exercice.noteVocabulaire" #noteVocabulaire="ngModel" required />
+                <div *ngIf="f.submitted && !noteVocabulaire.valid" class="help-block">Bareme vocabulaire requis</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !noteTraduction.valid }">
+                <label for="noteTraduction">Traduction</label>
+                <input type="text" class="form-control" name="noteTraduction" [(ngModel)]="exercice.noteTraduction" #noteTraduction="ngModel" required />
+                <div *ngIf="f.submitted && !noteTraduction.valid" class="help-block">Bareme traduction requis</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !noteGrammaire.valid }">
+                <label for="noteGrammaire">Grammaire</label>
+                <input type="text" class="form-control" name="noteGrammaire" [(ngModel)]="exercice.noteGrammaire" #noteGrammaire="ngModel" required />
+                <div *ngIf="f.submitted && !noteGrammaire.valid" class="help-block">Bareme grammaire requis</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !noteIG.valid }">
+                <label for="noteIG">Idée globale</label>
+                <input type="text" class="form-control" name="noteIG" [(ngModel)]="exercice.noteIG" #noteIG="ngModel" required />
+                <div *ngIf="f.submitted && !noteIG.valid" class="help-block">Bareme idée globale requis</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !noteArgumentation.valid }">
+                <label for="noteArgumentation">Argumentation</label>
+                <input type="text" class="form-control" name="noteArgumentation" [(ngModel)]="exercice.noteArgumentation" #noteArgumentation="ngModel" required />
+                <div *ngIf="f.submitted && !noteArgumentation.valid" class="help-block">Bareme argumentation requis</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !noteLiens.valid }">
+                <label for="noteLiens">Liens externes</label>
+                <input type="text" class="form-control" name="noteLiens" [(ngModel)]="exercice.noteLiens" #noteLiens="ngModel" required />
+                <div *ngIf="f.submitted && !noteLiens.valid" class="help-block">Bareme liens externes requis</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">Création</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <a [routerLink]="['/login']" class="btn btn-link">Annuler</a>
+        </div>
+    </form>
+</div>
