@@ -1,10 +1,10 @@
 {
-    "name": "Coell",
+    "name": "mean-angular2-registration-login-example-server",
     "version": "1.0.0",
-    "description": "Application de co-e-learning",
+    "description": "Server for MEAN Stack with Angular 2 User Registration and Login Example",
     "repository": {
         "type": "git",
-        "url": "https://github.com/jeanalexandre/CoellMean.git"
+        "url": "https://github.com/cornflourblue/mean-angular2-registration-login-example.git"
     },
     "dependencies": {
         "bcryptjs": "^2.1.0",
