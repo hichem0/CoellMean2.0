@@ -9,6 +9,7 @@ var index_5 = require("./mygroups/index");
 var index_6 = require("./groupform/index");
 var index_7 = require("./groupdetails/index");
 var index_8 = require("./exerciceform/index");
+var index_9 = require("./profil/index");
 var appRoutes = [
     { path: '', component: index_1.HomeComponent, canActivate: [index_4.AuthGuard] },
     { path: 'login', component: index_2.LoginComponent },
@@ -17,6 +18,7 @@ var appRoutes = [
     { path: 'group/create', component: index_6.GroupformComponent },
     { path: 'group', component: index_7.GroupdetailsComponent },
     { path: 'exercice/create', component: index_8.ExerciceformComponent },
+    { path: 'profil', component: index_9.ProfilComponent },
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];
