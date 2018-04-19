@@ -25,6 +25,7 @@ var index_9 = require("./groupform/index");
 var index_10 = require("./groupdetails/index");
 var index_11 = require("./exerciceform/index");
 var index_12 = require("./profil/index");
+var analyseform_component_1 = require("./analyseform/analyseform.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -47,6 +48,7 @@ var AppModule = /** @class */ (function () {
                 index_10.GroupdetailsComponent,
                 index_11.ExerciceformComponent,
                 index_12.ProfilComponent,
+                analyseform_component_1.AnalyseformComponent,
             ],
             providers: [
                 index_2.AuthGuard,
@@ -54,6 +56,8 @@ var AppModule = /** @class */ (function () {
                 index_4.AuthenticationService,
                 index_4.UserService,
                 group_service_1.GroupService,
+                index_4.AnalyseService,
+                index_4.ExerciceService,
                 index_3.JwtInterceptorProvider,
                 index_3.ErrorInterceptorProvider
             ],
