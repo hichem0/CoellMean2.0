@@ -8,6 +8,7 @@ import {MygroupsComponent} from "./mygroups/index";
 import {GroupformComponent} from "./groupform/index";
 import {GroupdetailsComponent} from "./groupdetails/index";
 import {ExerciceformComponent} from "./exerciceform/index";
+import {ProfilComponent} from "./profil/index";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
     { path: 'group/create', component: GroupformComponent},
     { path: 'group', component: GroupdetailsComponent},
     { path: 'exercice/create', component: ExerciceformComponent},
+    { path: 'profil', component: ProfilComponent},
 
 
     // otherwise redirect to home

@@ -18,6 +18,7 @@ import {GroupService} from "./_services/group.service";
 import {GroupformComponent} from "./groupform/index";
 import {GroupdetailsComponent} from "./groupdetails/index";
 import {ExerciceformComponent} from "./exerciceform/index";
+import {ProfilComponent} from "./profil/index";
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import {ExerciceformComponent} from "./exerciceform/index";
         GroupformComponent,
         GroupdetailsComponent,
         ExerciceformComponent,
+        ProfilComponent,
     ],
     providers: [
         AuthGuard,
