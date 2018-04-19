@@ -1,0 +1,9 @@
+version: '2'
+services:
+    coelmain-postgresql:
+        image: postgres:9.6.5
+        environment:
+            - POSTGRES_USER=coeldb
+            - POSTGRES_PASSWORD=passwdlol
+        ports:
+            - 5432:5432
