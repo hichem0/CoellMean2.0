@@ -4,8 +4,8 @@ import {
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { UserRegisterDto } from '../dto/user.register.dto';
-import {ApiUseTags, ApiResponse, ApiImplicitParam, ApiBearerAuth} from '@nestjs/swagger';
-import {UserUpdateDto} from "../dto/user.update.dto";
+import { ApiUseTags, ApiResponse, ApiImplicitParam, ApiBearerAuth } from '@nestjs/swagger';
+import { UserUpdateDto } from '../dto/user.update.dto';
 
 @ApiUseTags('User management')
 @Controller('user')
@@ -26,7 +26,7 @@ export class UserController {
     @ApiResponse({ status: 201, description: 'The user has been successfully created.', type: User })
     @ApiResponse({ status: 409, description: 'There is a conflict with the email or phone number.' })
     async register(@Body() userRegisterDto: UserRegisterDto): Promise<User> {
-        let maybeUser = await this.userService.findByUsername(userRegisterDto.username);
+        const maybeUser = await this.userService.findByUsername(userRegisterDto.username);
         if (maybeUser.isPresent) {
             throw new  ConflictException('Username already taken');
         }
