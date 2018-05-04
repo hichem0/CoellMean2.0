@@ -19,17 +19,20 @@ var UserService = /** @class */ (function () {
     UserService.prototype.getAll = function () {
         return this.http.get(app_config_1.appConfig.apiUrl + '/users');
     };
-    UserService.prototype.getById = function (_id) {
-        return this.http.get(app_config_1.appConfig.apiUrl + '/users/' + _id);
+    UserService.prototype.getCurrentUser = function () {
+        return this.http.get(app_config_1.appConfig.apiUrl + '/auth/me');
+    };
+    UserService.prototype.getById = function (id) {
+        return this.http.get(app_config_1.appConfig.apiUrl + '/users/' + id);
     };
     UserService.prototype.create = function (user) {
-        return this.http.post(app_config_1.appConfig.apiUrl + '/users/register', user);
+        return this.http.post(app_config_1.appConfig.apiUrl + '/user', user);
     };
     UserService.prototype.update = function (user) {
-        return this.http.put(app_config_1.appConfig.apiUrl + '/users/' + user._id, user);
+        return this.http.put(app_config_1.appConfig.apiUrl + '/users/' + user.id, user);
     };
-    UserService.prototype.delete = function (_id) {
-        return this.http.delete(app_config_1.appConfig.apiUrl + '/users/' + _id);
+    UserService.prototype.delete = function (id) {
+        return this.http.delete(app_config_1.appConfig.apiUrl + '/users/' + id);
     };
     UserService = __decorate([
         core_1.Injectable(),

@@ -18,19 +18,19 @@ var AuthenticationService = /** @class */ (function () {
         this.http = http;
     }
     AuthenticationService.prototype.login = function (username, password) {
-        return this.http.post(app_config_1.appConfig.apiUrl + '/users/authenticate', { username: username, password: password })
-            .map(function (user) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/auth/token', { username: username, password: password })
+            .map(function (access_token) {
             // login successful if there's a jwt token in the response
-            if (user && user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
+            if (access_token && access_token.access_token) {
+                // store  jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('accessToken', JSON.stringify(access_token));
             }
-            return user;
+            return access_token;
         });
     };
     AuthenticationService.prototype.logout = function () {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('accessToken');
     };
     AuthenticationService = __decorate([
         core_1.Injectable(),

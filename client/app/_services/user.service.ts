@@ -12,19 +12,23 @@ export class UserService {
         return this.http.get<User[]>(appConfig.apiUrl + '/users');
     }
 
-    getById(_id: string) {
-        return this.http.get(appConfig.apiUrl + '/users/' + _id);
+    getCurrentUser() {
+        return this.http.get(appConfig.apiUrl + '/auth/me');
+    }
+
+    getById(id: string) {
+        return this.http.get(appConfig.apiUrl + '/users/' + id);
     }
 
     create(user: User) {
-        return this.http.post(appConfig.apiUrl + '/users/register', user);
+        return this.http.post(appConfig.apiUrl + '/user', user);
     }
 
     update(user: User) {
-        return this.http.put(appConfig.apiUrl + '/users/' + user._id, user);
+        return this.http.put(appConfig.apiUrl + '/users/' + user.id, user);
     }
 
-    delete(_id: string) {
-        return this.http.delete(appConfig.apiUrl + '/users/' + _id);
+    delete(id: string) {
+        return this.http.delete(appConfig.apiUrl + '/users/' + id);
     }
 }
