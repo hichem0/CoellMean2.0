@@ -6,9 +6,9 @@ import { UserController } from './user/user.controller';
 import { Authority } from './authority/authority.entity';
 import { AuthorityService } from './authority/authority.service';
 import { RolesGuard } from '../gard/roles.guard';
-import {Group} from "./group/group.entity";
-import {GroupController} from './group/group.controller';
-import {GroupService} from './group/group.service';
+import { Group } from './group/group.entity';
+import { GroupController } from './group/group.controller';
+import { GroupService } from './group/group.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([User, Authority, Group])],

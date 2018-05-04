@@ -15,7 +15,7 @@ export class Group extends DbAuditModel{
     groupname: string;
 
     @ApiModelProperty({ required: true })
-    @ManyToOne(type => User, user => user.adminGroups, { cascadeAll: true, eager: true })
+    @ManyToOne(type => User, user => user.adminGroups, { eager: true })
     admin: User;
 
     @ApiModelProperty({ required: true })
