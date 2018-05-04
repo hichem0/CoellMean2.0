@@ -11,7 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ExerciceformComponent = /** @class */ (function () {
-    function ExerciceformComponent() {
+    function ExerciceformComponent(
+    // private router: Router,
+    // private exerciceService: ExerciceService,
+    // private alertService: AlertService)
+    ) {
         this.exercice = {};
         this.loading = false;
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
