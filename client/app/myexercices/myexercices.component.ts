@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {Exercice, User} from '../_models/index';
-import {ExerciceService} from "../_services/index";
+import {ExerciceService, AuthenticationService} from "../_services/index";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
@@ -15,12 +15,14 @@ export class MyexercicesComponent implements OnInit {
 
     constructor(private exerciceService: ExerciceService,
                 private router: Router,
-                private activatedRoute: ActivatedRoute) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                private activatedRoute: ActivatedRoute,
+                private authenticationService: AuthenticationService
+    ) {
     }
 
     ngOnInit() {
         this.loadAllExercices();
+        this.currentUser = this.authenticationService.user;
     }
 
     deleteExercice(_id: string) {

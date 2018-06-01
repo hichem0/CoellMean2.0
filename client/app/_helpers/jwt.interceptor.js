@@ -13,11 +13,11 @@ var JwtInterceptor = /** @class */ (function () {
     }
     JwtInterceptor.prototype.intercept = function (request, next) {
         // add authorization header with jwt token if available
-        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
+        var currentToken = JSON.parse(localStorage.getItem('accessToken'));
+        if (currentToken) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: "Bearer " + currentUser.token
+                    Authorization: "Bearer " + currentToken
                 }
             });
         }

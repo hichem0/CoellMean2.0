@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Group, User} from "../_models/index";
-import {AlertService, GroupService, UserService} from "../_services/index";
+import {AlertService, GroupService, UserService, AuthenticationService} from "../_services/index";
 import {ActivatedRoute, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 
@@ -21,8 +21,8 @@ export class GroupdetailsComponent implements OnInit {
                 private userService: UserService,
                 private route: ActivatedRoute,
                 private alertService: AlertService,
-                private router: Router) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                private router: Router,
+                private authService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -33,6 +33,7 @@ export class GroupdetailsComponent implements OnInit {
             .subscribe(params => {
                 this.groupName = params.groupname;
             });
+        this.currentUser = this.authService.user;
     }
 
     private getGroup() {

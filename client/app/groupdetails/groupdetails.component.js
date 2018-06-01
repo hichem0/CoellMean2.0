@@ -14,14 +14,14 @@ var index_1 = require("../_services/index");
 var router_1 = require("@angular/router");
 require("rxjs/add/operator/filter");
 var GroupdetailsComponent = /** @class */ (function () {
-    function GroupdetailsComponent(groupService, userService, route, alertService, router) {
+    function GroupdetailsComponent(groupService, userService, route, alertService, router, authService) {
         this.groupService = groupService;
         this.userService = userService;
         this.route = route;
         this.alertService = alertService;
         this.router = router;
+        this.authService = authService;
         this.loading = false;
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     GroupdetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -32,6 +32,7 @@ var GroupdetailsComponent = /** @class */ (function () {
             .subscribe(function (params) {
             _this.groupName = params.groupname;
         });
+        this.currentUser = this.authService.user;
     };
     GroupdetailsComponent.prototype.getGroup = function () {
         var _this = this;
@@ -95,7 +96,8 @@ var GroupdetailsComponent = /** @class */ (function () {
             index_1.UserService,
             router_1.ActivatedRoute,
             index_1.AlertService,
-            router_1.Router])
+            router_1.Router,
+            index_1.AuthenticationService])
     ], GroupdetailsComponent);
     return GroupdetailsComponent;
 }());

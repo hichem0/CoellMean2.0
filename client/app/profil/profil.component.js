@@ -13,16 +13,17 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
 var ProfilComponent = /** @class */ (function () {
-    function ProfilComponent(router, userService, alertService, activatedRoute) {
+    function ProfilComponent(router, userService, alertService, activatedRoute, authenticationService) {
         this.router = router;
         this.userService = userService;
         this.alertService = alertService;
         this.activatedRoute = activatedRoute;
+        this.authenticationService = authenticationService;
         this.model = {};
         this.loading = false;
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     ProfilComponent.prototype.ngOnInit = function () {
+        this.currentUser = this.authenticationService.user;
     };
     ProfilComponent.prototype.updateUser = function () {
         var _this = this;
@@ -44,7 +45,8 @@ var ProfilComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [router_1.Router,
             index_1.UserService,
             index_1.AlertService,
-            router_1.ActivatedRoute])
+            router_1.ActivatedRoute,
+            index_1.AuthenticationService])
     ], ProfilComponent);
     return ProfilComponent;
 }());

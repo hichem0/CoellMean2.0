@@ -10,17 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var index_1 = require("../_services/index");
 var ExerciceformComponent = /** @class */ (function () {
     function ExerciceformComponent(
     // private router: Router,
     // private exerciceService: ExerciceService,
     // private alertService: AlertService)
-    ) {
+    authenticationService) {
+        this.authenticationService = authenticationService;
         this.exercice = {};
         this.loading = false;
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     ExerciceformComponent.prototype.ngOnInit = function () {
+        this.currentUser = this.authenticationService.user;
     };
     ExerciceformComponent.prototype.createExercice = function () {
         // this.loading = true;
@@ -41,7 +43,7 @@ var ExerciceformComponent = /** @class */ (function () {
             moduleId: module.id,
             templateUrl: 'exerciceform.component.html'
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [index_1.AuthenticationService])
     ], ExerciceformComponent);
     return ExerciceformComponent;
 }());

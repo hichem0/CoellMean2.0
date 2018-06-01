@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertService, ExerciceService } from '../_services/index';
+import {AlertService, AuthenticationService, ExerciceService} from '../_services/index';
 import { User} from "../_models/index";
 
 @Component({
@@ -18,12 +18,12 @@ export class ExerciceformComponent implements OnInit{
         // private router: Router,
         // private exerciceService: ExerciceService,
         // private alertService: AlertService)
+        private authenticationService: AuthenticationService
     ){
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
     ngOnInit(): void {
-
+        this.currentUser = this.authenticationService.user;
     }
 
     createExercice() {

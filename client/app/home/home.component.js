@@ -12,13 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var index_1 = require("../_services/index");
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(userService) {
+    function HomeComponent(userService, authenticationService) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
         this.users = [];
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     HomeComponent.prototype.ngOnInit = function () {
         this.loadAllUsers();
+        this.currentUser = this.authenticationService.user;
     };
     HomeComponent.prototype.deleteUser = function (_id) {
         var _this = this;
@@ -28,12 +29,15 @@ var HomeComponent = /** @class */ (function () {
         var _this = this;
         this.userService.getAll().subscribe(function (users) { _this.users = users; });
     };
+    HomeComponent.prototype.logout = function () {
+        this.authenticationService.logout();
+    };
     HomeComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             templateUrl: 'home.component.html'
         }),
-        __metadata("design:paramtypes", [index_1.UserService])
+        __metadata("design:paramtypes", [index_1.UserService, index_1.AuthenticationService])
     ], HomeComponent);
     return HomeComponent;
 }());

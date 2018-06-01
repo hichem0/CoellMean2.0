@@ -9,7 +9,7 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<User[]>(appConfig.apiUrl + '/users');
+        return this.http.get<User[]>(appConfig.apiUrl + '/user');
     }
 
     getCurrentUser() {
@@ -17,7 +17,7 @@ export class UserService {
     }
 
     getById(id: string) {
-        return this.http.get(appConfig.apiUrl + '/users/' + id);
+        return this.http.get(appConfig.apiUrl + '/user/' + id);
     }
 
     create(user: User) {
@@ -25,10 +25,10 @@ export class UserService {
     }
 
     update(user: User) {
-        return this.http.put(appConfig.apiUrl + '/users/' + user.id, user);
+        return this.http.put(appConfig.apiUrl + '/user/' + user.id, user);
     }
 
     delete(id: string) {
-        return this.http.delete(appConfig.apiUrl + '/users/' + id);
+        return this.http.delete(appConfig.apiUrl + '/user/' + id);
     }
 }

@@ -13,15 +13,16 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
 var GroupformComponent = /** @class */ (function () {
-    function GroupformComponent(router, groupService, alertService) {
+    function GroupformComponent(router, groupService, alertService, authenticationService) {
         this.router = router;
         this.groupService = groupService;
         this.alertService = alertService;
+        this.authenticationService = authenticationService;
         this.group = {};
         this.loading = false;
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     GroupformComponent.prototype.ngOnInit = function () {
+        this.currentUser = this.authenticationService.user;
     };
     GroupformComponent.prototype.createGroup = function () {
         var _this = this;
@@ -44,7 +45,8 @@ var GroupformComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [router_1.Router,
             index_1.GroupService,
-            index_1.AlertService])
+            index_1.AlertService,
+            index_1.AuthenticationService])
     ], GroupformComponent);
     return GroupformComponent;
 }());
