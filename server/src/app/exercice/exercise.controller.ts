@@ -14,26 +14,26 @@ export class ExerciseController {
     ) {}
 
     @Post()
-    @ApiResponse({ status: 201, description: 'The exercice has been successfully created.', type: Exercice })
+    @ApiResponse({ status: 201, description: 'The exercise has been successfully created.', type: Exercice })
     async createExo(@Body() exo: Exercice): Promise<Exercice> {
         return this.exerciceService.createExerice(exo);
     }
 
     @Get()
-    @ApiResponse({ status: 200, description: 'Get a list of all users.', type: Exercice, isArray: true })
+    @ApiResponse({ status: 200, description: 'Get a list of all exercise.', type: Exercice, isArray: true })
     async findAll(): Promise<Exercice[]> {
         return this.exerciceService.findAll();
     }
 
     @Get(':id')
-    @ApiResponse({ status: 200, description: 'The group with the matching id', type: Exercice })
+    @ApiResponse({ status: 200, description: 'The exercise with the matching id', type: Exercice })
     @ApiResponse({ status: 404, description: 'Not found.' })
     @ApiImplicitParam({ type: Number, name: 'id', required: true })
     async findOne(@Param() { id }): Promise<Exercice> {
         return (await this.exerciceService.findById(id)).orElseThrow(() => new NotFoundException());
     }
 
-    @ApiResponse({ status: 200, description: 'The group is correctly deleted' })
+    @ApiResponse({ status: 200, description: 'The exercise is correctly deleted' })
     @Delete(':id')
     @ApiImplicitParam({ type: Number, name: 'id', required: true })
     async deleteOne(@Param() { id }) {
