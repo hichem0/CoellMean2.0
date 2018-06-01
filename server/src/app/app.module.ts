@@ -9,14 +9,37 @@ import { RolesGuard } from '../gard/roles.guard';
 import { Group } from './group/group.entity';
 import { GroupController } from './group/group.controller';
 import { GroupService } from './group/group.service';
-import {Exercice} from './exercice/exercise.entity';
-import {ExerciceService} from './exercice/exercice.component';
-import {ExerciseController} from './exercice/exercise.controller';
+import { Exercice } from './exercice/exercise.entity';
+import { ExerciceService } from './exercice/exercice.component';
+import { ExerciseController } from './exercice/exercise.controller';
+import { WordPair } from './wordPair/wordPair.entity';
+import {WordPairService} from './wordPair/wordPair.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Authority, Group, Exercice])],
-    controllers: [UserController, GroupController, ExerciseController],
-    components: [UserService, AuthorityService, RolesGuard, GroupService, ExerciceService],
-    exports: [UserService],
+    imports: [
+        TypeOrmModule.forFeature([
+            User,
+            Authority,
+            Group,
+            Exercice,
+            WordPair,
+        ]),
+    ],
+    controllers: [
+        UserController,
+        GroupController,
+        ExerciseController,
+    ],
+    components: [
+        UserService,
+        AuthorityService,
+        RolesGuard,
+        GroupService,
+        ExerciceService,
+        WordPairService,
+    ],
+    exports: [
+        UserService,
+    ],
 })
 export class AppModule {}
