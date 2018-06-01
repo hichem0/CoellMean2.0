@@ -9,10 +9,10 @@ import { RolesGuard } from '../gard/roles.guard';
 import { Group } from './group/group.entity';
 import { GroupController } from './group/group.controller';
 import { GroupService } from './group/group.service';
-import { Exercise } from './exercice/exercice.entity';
+import {Exercice} from './exercice/exercise.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Authority, Group, Exercise])],
+    imports: [TypeOrmModule.forFeature([User, Authority, Group, Exercice])],
     controllers: [UserController, GroupController],
     components: [UserService, AuthorityService, RolesGuard, GroupService],
     exports: [UserService],
