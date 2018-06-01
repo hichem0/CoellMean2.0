@@ -6,6 +6,7 @@ import { AppModule } from './app/app.module';
 import { AuthModule } from './auth/auth.module';
 import { UserController } from './app/user/user.controller';
 import { GroupController } from './app/group/group.controller';
+import {ExerciseController} from './app/exercice/exercise.controller';
 
 @Module({
     imports: [
@@ -27,6 +28,7 @@ export class ApplicationModule implements NestModule {
                        { path: '/user', method: RequestMethod.GET },
                        { path: '/user/:id', method: RequestMethod.ALL },
                        GroupController,
+                       ExerciseController,
             );
     }
 }

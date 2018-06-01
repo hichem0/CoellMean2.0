@@ -10,11 +10,13 @@ import { Group } from './group/group.entity';
 import { GroupController } from './group/group.controller';
 import { GroupService } from './group/group.service';
 import {Exercice} from './exercice/exercise.entity';
+import {ExerciceService} from './exercice/exercice.component';
+import {ExerciseController} from './exercice/exercise.controller';
 
 @Module({
     imports: [TypeOrmModule.forFeature([User, Authority, Group, Exercice])],
-    controllers: [UserController, GroupController],
-    components: [UserService, AuthorityService, RolesGuard, GroupService],
+    controllers: [UserController, GroupController, ExerciseController],
+    components: [UserService, AuthorityService, RolesGuard, GroupService, ExerciceService],
     exports: [UserService],
 })
 export class AppModule {}
