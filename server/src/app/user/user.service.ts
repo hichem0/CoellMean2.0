@@ -1,4 +1,4 @@
-import {Component, Inject, NotFoundException} from '@nestjs/common';
+import { Component, Inject, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,7 +7,7 @@ import Optional from 'typescript-optional';
 import { UserRegisterDto } from '../dto/user.register.dto';
 import { ROLE_USER } from '../authority/authority.constants';
 import { Authority } from '../authority/authority.entity';
-import {UserUpdateDto} from "../dto/user.update.dto";
+import { UserUpdateDto } from '../dto/user.update.dto';
 
 @Component()
 export class UserService {

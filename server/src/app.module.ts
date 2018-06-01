@@ -4,8 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CorsMiddleware } from '@nest-middlewares/cors';
 import { AppModule } from './app/app.module';
 import { AuthModule } from './auth/auth.module';
-import {UserController} from "./app/user/user.controller";
-import {GroupController} from './app/group/group.controller';
+import { UserController } from './app/user/user.controller';
+import { GroupController } from './app/group/group.controller';
 
 @Module({
     imports: [
@@ -26,7 +26,7 @@ export class ApplicationModule implements NestModule {
                        { path: '/auth/me', method: RequestMethod.ALL },
                        { path: '/user', method: RequestMethod.GET },
                        { path: '/user/:id', method: RequestMethod.ALL },
-                GroupController,
+                       GroupController,
             );
     }
 }

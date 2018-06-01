@@ -6,7 +6,7 @@ import { Authority } from '../authority/authority.entity';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Exclude, Type } from 'class-transformer';
 import { DbAuditModel } from '../../util/dbmodel.model';
-import {Group} from "../group/group.entity";
+import { Group } from '../group/group.entity';
 
 @Entity()
 export class User extends DbAuditModel{
@@ -36,11 +36,8 @@ export class User extends DbAuditModel{
     @Type(() => Authority)
     authority: Authority[];
 
-
     adminGroups: Group[];
 
-
     membeGroups: Group[];
-
 
 }
