@@ -35,7 +35,8 @@ export class GroupService {
         return Optional.ofNullable(group);
     }
 
-    delete(userId: number): Promise<void> {
-        return this.groupRepository.deleteById(userId);
+    async delete(id: number): Promise<void> {
+        const group = (await this.findById(id)).orElseThrow(() => new NotFoundException());
+        await this.groupRepository.remove(group);
     }
 }
