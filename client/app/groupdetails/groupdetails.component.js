@@ -14,13 +14,14 @@ var index_1 = require("../_services/index");
 var router_1 = require("@angular/router");
 require("rxjs/add/operator/filter");
 var GroupdetailsComponent = /** @class */ (function () {
-    function GroupdetailsComponent(groupService, userService, route, alertService, router, authService) {
+    function GroupdetailsComponent(groupService, userService, route, alertService, router, authService, activatedRoute) {
         this.groupService = groupService;
         this.userService = userService;
         this.route = route;
         this.alertService = alertService;
         this.router = router;
         this.authService = authService;
+        this.activatedRoute = activatedRoute;
         this.loading = false;
     }
     GroupdetailsComponent.prototype.ngOnInit = function () {
@@ -57,7 +58,7 @@ var GroupdetailsComponent = /** @class */ (function () {
         this.groupService.update(this.group)
             .subscribe(function (data) {
             _this.alertService.success(username + ' ajouté au groupe', true);
-            _this.router.navigate(['/group', { groupname: _this.groupName }]);
+            _this.goToGroupDetails(_this.group.groupname);
         }, function (error) {
             _this.alertService.error(error);
             _this.loading = false;
@@ -69,14 +70,19 @@ var GroupdetailsComponent = /** @class */ (function () {
         this.groupService.update(this.group)
             .subscribe(function (data) {
             _this.alertService.success(username + ' supprimé au groupe', true);
-            _this.router.navigate(['/group', { groupname: _this.groupName }]);
+            _this.goToGroupDetails(_this.group.groupname);
         }, function (error) {
             _this.alertService.error(error);
             _this.loading = false;
         });
     };
+    GroupdetailsComponent.prototype.goToGroupDetails = function (groupname) {
+        var queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+        queryParams['groupname'] = groupname;
+        this.router.navigate(['/group'], { queryParams: queryParams });
+    };
     GroupdetailsComponent.prototype.userInGroup = function (username) {
-        if (username === this.group.adminname) {
+        if (username === this.group.admin.username) {
             return true;
         }
         for (var _i = 0, _a = this.group.users; _i < _a.length; _i++) {
@@ -86,6 +92,10 @@ var GroupdetailsComponent = /** @class */ (function () {
             }
         }
         return false;
+    };
+    GroupdetailsComponent.prototype.deleteGroup = function () {
+        var _this = this;
+        this.groupService.delete(this.group.id).subscribe(function () { _this.router.navigate(['/mygroups']); });
     };
     GroupdetailsComponent = __decorate([
         core_1.Component({
@@ -97,7 +107,8 @@ var GroupdetailsComponent = /** @class */ (function () {
             router_1.ActivatedRoute,
             index_1.AlertService,
             router_1.Router,
-            index_1.AuthenticationService])
+            index_1.AuthenticationService,
+            router_1.ActivatedRoute])
     ], GroupdetailsComponent);
     return GroupdetailsComponent;
 }());

@@ -15,9 +15,9 @@ export class ExerciceformComponent implements OnInit{
     currentUser: User;
 
     constructor(
-        // private router: Router,
-        // private exerciceService: ExerciceService,
-        // private alertService: AlertService)
+        private router: Router,
+        private exerciceService: ExerciceService,
+        private alertService: AlertService,
         private authenticationService: AuthenticationService
     ){
     }
@@ -27,17 +27,17 @@ export class ExerciceformComponent implements OnInit{
     }
 
     createExercice() {
-        // this.loading = true;
-        // this.exercice.createur = this.currentUser.username;
-        // this.exerciceService.create(this.exercice)
-        //     .subscribe(
-        //         data => {
-        //             this.alertService.success('Création réussie', true);
-        //             this.router.navigate(['/myexercices']);
-        //         },
-        //         error => {
-        //             this.alertService.error(error);
-        //             this.loading = false;
-        //         });
+        this.loading = true;
+        this.exercice.createur = this.currentUser.username;
+        this.exerciceService.create(this.exercice)
+            .subscribe(
+                data => {
+                    this.alertService.success('Création réussie', true);
+                    this.router.navigate(['/myexercices']);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
     }
 }

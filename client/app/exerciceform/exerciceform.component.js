@@ -10,13 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
 var ExerciceformComponent = /** @class */ (function () {
-    function ExerciceformComponent(
-    // private router: Router,
-    // private exerciceService: ExerciceService,
-    // private alertService: AlertService)
-    authenticationService) {
+    function ExerciceformComponent(router, exerciceService, alertService, authenticationService) {
+        this.router = router;
+        this.exerciceService = exerciceService;
+        this.alertService = alertService;
         this.authenticationService = authenticationService;
         this.exercice = {};
         this.loading = false;
@@ -25,25 +25,27 @@ var ExerciceformComponent = /** @class */ (function () {
         this.currentUser = this.authenticationService.user;
     };
     ExerciceformComponent.prototype.createExercice = function () {
-        // this.loading = true;
-        // this.exercice.createur = this.currentUser.username;
-        // this.exerciceService.create(this.exercice)
-        //     .subscribe(
-        //         data => {
-        //             this.alertService.success('Création réussie', true);
-        //             this.router.navigate(['/myexercices']);
-        //         },
-        //         error => {
-        //             this.alertService.error(error);
-        //             this.loading = false;
-        //         });
+        var _this = this;
+        this.loading = true;
+        this.exercice.createur = this.currentUser.username;
+        this.exerciceService.create(this.exercice)
+            .subscribe(function (data) {
+            _this.alertService.success('Création réussie', true);
+            _this.router.navigate(['/myexercices']);
+        }, function (error) {
+            _this.alertService.error(error);
+            _this.loading = false;
+        });
     };
     ExerciceformComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             templateUrl: 'exerciceform.component.html'
         }),
-        __metadata("design:paramtypes", [index_1.AuthenticationService])
+        __metadata("design:paramtypes", [router_1.Router,
+            index_1.ExerciceService,
+            index_1.AlertService,
+            index_1.AuthenticationService])
     ], ExerciceformComponent);
     return ExerciceformComponent;
 }());

@@ -17,16 +17,13 @@ export class MygroupsComponent implements OnInit {
     constructor(private groupService: GroupService,
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService
+    ) {
     }
 
     ngOnInit() {
         this.loadAllGroups();
         this.currentUser = this.authenticationService.user;
-    }
-
-    deleteGroup(_id: string) {
-        this.groupService.delete(_id).subscribe(() => { this.loadAllGroups() });
     }
 
     private loadAllGroups() {

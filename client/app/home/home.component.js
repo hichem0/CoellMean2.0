@@ -21,9 +21,9 @@ var HomeComponent = /** @class */ (function () {
         this.loadAllUsers();
         this.currentUser = this.authenticationService.user;
     };
-    HomeComponent.prototype.deleteUser = function (_id) {
+    HomeComponent.prototype.deleteUser = function (id) {
         var _this = this;
-        this.userService.delete(_id).subscribe(function () { _this.loadAllUsers(); });
+        this.userService.delete(id).subscribe(function () { _this.loadAllUsers(); });
     };
     HomeComponent.prototype.loadAllUsers = function () {
         var _this = this;

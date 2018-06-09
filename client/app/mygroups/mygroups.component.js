@@ -24,10 +24,6 @@ var MygroupsComponent = /** @class */ (function () {
         this.loadAllGroups();
         this.currentUser = this.authenticationService.user;
     };
-    MygroupsComponent.prototype.deleteGroup = function (_id) {
-        var _this = this;
-        this.groupService.delete(_id).subscribe(function () { _this.loadAllGroups(); });
-    };
     MygroupsComponent.prototype.loadAllGroups = function () {
         var _this = this;
         this.groupService.getAll().subscribe(function (groups) { _this.groups = groups; });

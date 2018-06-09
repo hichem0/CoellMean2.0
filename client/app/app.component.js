@@ -12,6 +12,8 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
     };
+    AppComponent.prototype.getCurrentUser = function () {
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

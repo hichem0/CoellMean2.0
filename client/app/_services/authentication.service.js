@@ -19,6 +19,7 @@ var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(http, router) {
         this.http = http;
         this.router = router;
+        this.user = this.me();
     }
     AuthenticationService.prototype.login = function (username, password) {
         var _this = this;

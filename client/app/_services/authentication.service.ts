@@ -14,6 +14,7 @@ export class AuthenticationService {
     user : any;
 
     constructor(private http: HttpClient, private router: Router) {
+        this.user = this.me();
     }
 
     login(username: string, password: string) {
