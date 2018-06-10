@@ -8,6 +8,7 @@ import { Exclude, Type } from 'class-transformer';
 import { DbAuditModel } from '../../util/dbmodel.model';
 import { Group } from '../group/group.entity';
 import {Exercice} from '../exercice/exercise.entity';
+import {Analyse} from '../analyse/analyse.entity';
 
 @Entity()
 export class User extends DbAuditModel{
@@ -45,5 +46,9 @@ export class User extends DbAuditModel{
 
     @OneToMany(type => Exercice, exo => exo.creator)
     exerciceCreated: Exercice[];
+
+
+    @OneToMany(type => Analyse, analyse => analyse.user)
+    analyses: Analyse;
 
 }

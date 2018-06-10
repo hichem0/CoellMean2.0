@@ -1,7 +1,8 @@
 import { DbAuditModel } from '../../util/dbmodel.model';
-import {Column, Entity, ManyToOne, OneToMany} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { ApiModelProperty } from '@nestjs/swagger';
-import {User} from '../user/user.entity';
+import { User } from '../user/user.entity';
+import { Analyse } from '../analyse/analyse.entity';
 
 @Entity()
 export class Exercice extends DbAuditModel {
@@ -57,4 +58,6 @@ export class Exercice extends DbAuditModel {
     @ManyToOne(type => User, user => user.exerciceCreated, { eager: true })
     creator: User;
 
+    @OneToMany(type => Analyse, analyse => analyse.exercice, { eager: true })
+    resolutions: Analyse[];
 }
