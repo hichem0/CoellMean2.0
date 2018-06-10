@@ -1,6 +1,7 @@
 import { DbAuditModel } from '../../util/dbmodel.model';
-import { Column, Entity } from 'typeorm';
+import {Column, Entity, ManyToOne, OneToMany} from 'typeorm';
 import { ApiModelProperty } from '@nestjs/swagger';
+import {User} from '../user/user.entity';
 
 @Entity()
 export class Exercice extends DbAuditModel {
@@ -29,24 +30,31 @@ export class Exercice extends DbAuditModel {
     @Column({ length: 500 })
     lang: string;
 
-    @ApiModelProperty({ required: false })
+    @ApiModelProperty({ required: true })
     @Column('decimal')
     maxGradeVocab: number;
 
-    @ApiModelProperty({ required: false })
+    @ApiModelProperty({ required: true })
     @Column('decimal')
     maxGradeTrad: number;
 
-    @ApiModelProperty({ required: false })
+    @ApiModelProperty({ required: true })
     @Column('decimal')
     maxGradeGramar: number;
 
-    @ApiModelProperty({ required: false })
+    @ApiModelProperty({ required: true })
+    @Column('decimal')
+    maxGradeGlobalIdee: number;
+
+    @ApiModelProperty({ required: true })
     @Column('decimal')
     maxGradeArgumentation: number;
 
     @ApiModelProperty({ required: true })
-    @Column({ array: true, type: 'text' })
-    externalLinks: string[];
+    @Column('decimal')
+    maxGradeExternalLinks: number;
+
+    @ManyToOne(type => User, user => user.exerciceCreated, { eager: true })
+    creator: User;
 
 }

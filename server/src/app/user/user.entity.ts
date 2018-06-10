@@ -1,12 +1,13 @@
 import {
     Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany, JoinColumn, OneToOne,
-    CreateDateColumn, UpdateDateColumn, VersionColumn,
+    CreateDateColumn, UpdateDateColumn, VersionColumn, ManyToOne, OneToMany,
 } from 'typeorm';
 import { Authority } from '../authority/authority.entity';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Exclude, Type } from 'class-transformer';
 import { DbAuditModel } from '../../util/dbmodel.model';
 import { Group } from '../group/group.entity';
+import {Exercice} from '../exercice/exercise.entity';
 
 @Entity()
 export class User extends DbAuditModel{
@@ -36,8 +37,13 @@ export class User extends DbAuditModel{
     @Type(() => Authority)
     authority: Authority[];
 
+    @OneToMany(type => Group, group => group.admin)
     adminGroups: Group[];
 
+    @ManyToMany(type => Group, group => group.users)
     membeGroups: Group[];
+
+    @OneToMany(type => Exercice, exo => exo.creator)
+    exerciceCreated: Exercice[];
 
 }

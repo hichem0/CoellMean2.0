@@ -3,6 +3,8 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, Post } from '@
 import { ExerciceService } from './exercice.component';
 import { Exercice } from './exercise.entity';
 import { Group } from '../group/group.entity';
+import {User} from '../user/user.entity';
+import {UserConnected} from '../../decorator/user.decorator';
 
 @ApiUseTags('Exo management')
 @Controller('exo')
@@ -15,7 +17,8 @@ export class ExerciseController {
 
     @Post()
     @ApiResponse({ status: 201, description: 'The exercise has been successfully created.', type: Exercice })
-    async createExo(@Body() exo: Exercice): Promise<Exercice> {
+    async createExo(@Body() exo: Exercice, @UserConnected() user: User): Promise<Exercice> {
+        exo.creator = user;
         return this.exerciceService.createExerice(exo);
     }
 

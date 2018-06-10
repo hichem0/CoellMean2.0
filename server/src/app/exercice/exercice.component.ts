@@ -1,4 +1,4 @@
-import { Component } from '@nestjs/common';
+import {Component, NotFoundException} from '@nestjs/common';
 import Optional from 'typescript-optional';
 import { Repository } from 'typeorm';
 import { Exercice } from './exercise.entity';
@@ -26,7 +26,8 @@ export class ExerciceService {
         return Optional.ofNullable(exo);
     }
 
-    delete(exoId: number): Promise<void> {
-        return this.exerciseRepository.deleteById(exoId);
+    async delete(exoId: number): Promise<void> {
+        const exo = (await this.findById(exoId)).orElseThrow(() => new NotFoundException());
+        await this.exerciseRepository.remove(exo);
     }
 }
