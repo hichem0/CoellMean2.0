@@ -39,4 +39,10 @@ export class GroupService {
         const group = (await this.findById(id)).orElseThrow(() => new NotFoundException());
         await this.groupRepository.remove(group);
     }
+
+    async leaveGroup(id: number, user: User): Promise<Group> {
+        const group = (await this.findById(id)).orElseThrow(() => new NotFoundException());
+        group.users = group.users.filter(u => u.id !== user.id);
+        return this.groupRepository.save(group);
+    }
 }

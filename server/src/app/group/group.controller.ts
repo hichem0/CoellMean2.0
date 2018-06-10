@@ -21,12 +21,20 @@ export class GroupController {
         return this.groupService.createGroup(groupDto.groupname, user);
     }
 
-    @Post(':id')
+    @Post(':id/join')
     @ApiResponse({ status: 201, description: 'The current user has been added to the group.', type: Group })
     @ApiResponse({ status: 404, description: 'The group was not found.', type: Group })
     @ApiImplicitParam({ type: Number, name: 'id', required: true })
     async registerToGroup(@Param() { id }, @UserConnected() user: User): Promise<Group> {
         return this.groupService.addUserToGroup(id, user);
+    }
+
+    @Post(':id/leave')
+    @ApiResponse({ status: 201, description: 'The current user has been removed to the group.', type: Group })
+    @ApiResponse({ status: 404, description: 'The group was not found.', type: Group })
+    @ApiImplicitParam({ type: Number, name: 'id', required: true })
+    async leaveGroup(@Param() { id }, @UserConnected() user: User): Promise<Group> {
+        return this.groupService.leaveGroup(id, user);
     }
 
     @Get()
