@@ -16,7 +16,7 @@ export class Exercice extends DbAuditModel {
 
     @ApiModelProperty({ required: false })
     @Column()
-    publishDate: Date;
+    publishDate: string;
 
     @ApiModelProperty({ required: true })
     @Column({ length: 500 })
