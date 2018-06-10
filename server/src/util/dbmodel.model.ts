@@ -3,7 +3,7 @@ import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColu
 import { Exclude } from 'class-transformer';
 
 export abstract class DbAuditModel {
-    @ApiModelProperty()
+
     @PrimaryGeneratedColumn()
     id: number;
 

@@ -21,14 +21,14 @@ export class WordPair extends DbAuditModel {
     value: string;
 
     @Exclude()
-    @ManyToOne(type => Analyse, analise => analise.vocabulaire, { cascadeRemove: true })
+    @ManyToOne(type => Analyse, analise => analise.vocabulaire, { cascadeRemove: true, cascadeAll: true })
     vocab: Analyse;
 
     @Exclude()
-    @ManyToOne(type => Analyse, analise => analise.tradution, { cascadeRemove: true })
+    @ManyToOne(type => Analyse, analise => analise.tradution, { cascadeRemove: true, cascadeAll: true })
     trad: Analyse;
 
     @Exclude()
-    @ManyToOne(type => Analyse, analise => analise.grammaire, { cascadeRemove: true })
+    @ManyToOne(type => Analyse, analise => analise.grammaire, { cascadeRemove: true, cascadeAll: true })
     grammar: Analyse;
 }

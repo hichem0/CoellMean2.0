@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserController } from './app/user/user.controller';
 import { GroupController } from './app/group/group.controller';
 import {ExerciseController} from './app/exercice/exercise.controller';
+import {AnalyseController} from './app/analyse/analyse.controller';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ export class ApplicationModule implements NestModule {
                        { path: '/user/:id', method: RequestMethod.ALL },
                        GroupController,
                        ExerciseController,
+                       AnalyseController,
             );
     }
 }

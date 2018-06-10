@@ -3,6 +3,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
 import { Analyse } from '../analyse/analyse.entity';
+import {IsNumber, Min} from 'class-validator';
 
 @Entity()
 export class Exercice extends DbAuditModel {
@@ -31,29 +32,41 @@ export class Exercice extends DbAuditModel {
     @Column({ length: 500 })
     lang: string;
 
+    @IsNumber()
+    @Min(0)
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    maxGradeVocab: number;
+    @Column('real')
+    maxGradeVocab: number = 0;
 
+    @IsNumber()
+    @Min(0)
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    maxGradeTrad: number;
+    @Column('real')
+    maxGradeTrad: number = 0;
 
+    @IsNumber()
+    @Min(0)
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    maxGradeGramar: number;
+    @Column('real')
+    maxGradeGramar: number = 0;
 
+    @IsNumber()
+    @Min(0)
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    maxGradeGlobalIdee: number;
+    @Column('real')
+    maxGradeGlobalIdee: number = 0;
 
+    @IsNumber()
+    @Min(0)
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    maxGradeArgumentation: number;
+    @Column('real')
+    maxGradeArgumentation: number = 0;
 
+    @IsNumber()
+    @Min(0)
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    maxGradeExternalLinks: number;
+    @Column('real')
+    maxGradeExternalLinks: number = 0;
 
     @ManyToOne(type => User, user => user.exerciceCreated, { eager: true })
     creator: User;

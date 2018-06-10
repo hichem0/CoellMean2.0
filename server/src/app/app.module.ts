@@ -14,6 +14,9 @@ import { ExerciceService } from './exercice/exercice.component';
 import { ExerciseController } from './exercice/exercise.controller';
 import { WordPair } from './wordPair/wordPair.entity';
 import {WordPairService} from './wordPair/wordPair.service';
+import {Analyse} from './analyse/analyse.entity';
+import {AnalyseController} from './analyse/analyse.controller';
+import {AnalyseService} from './analyse/analyse.service';
 
 @Module({
     imports: [
@@ -23,12 +26,14 @@ import {WordPairService} from './wordPair/wordPair.service';
             Group,
             Exercice,
             WordPair,
+            Analyse,
         ]),
     ],
     controllers: [
         UserController,
         GroupController,
         ExerciseController,
+        AnalyseController,
     ],
     components: [
         UserService,
@@ -37,6 +42,7 @@ import {WordPairService} from './wordPair/wordPair.service';
         GroupService,
         ExerciceService,
         WordPairService,
+        AnalyseService,
     ],
     exports: [
         UserService,

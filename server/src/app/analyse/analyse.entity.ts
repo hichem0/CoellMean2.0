@@ -1,7 +1,7 @@
 import { DbAuditModel } from '../../util/dbmodel.model';
 import { User } from '../user/user.entity';
 import { WordPair } from '../wordPair/wordPair.entity';
-import {Column, Entity, ManyToOne, OneToMany} from 'typeorm';
+import { BeforeInsert, Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Exercice } from '../exercice/exercise.entity';
 
@@ -19,13 +19,16 @@ export class Analyse extends DbAuditModel {
     @Column('text')
     argumentation: string;
 
-    @OneToMany(type => WordPair, pair => pair.vocab, { cascadeInsert: true, cascadeUpdate: true, eager: true })
+    @ApiModelProperty({ required: true, type: WordPair, isArray: true })
+    @OneToMany(type => WordPair, pair => pair.vocab, { eager: true })
     vocabulaire: WordPair[];
 
-    @OneToMany(type => WordPair, pair => pair.trad, { cascadeInsert: true, cascadeUpdate: true, eager: true })
+    @ApiModelProperty({ required: true, type: WordPair, isArray: true })
+    @OneToMany(type => WordPair, pair => pair.trad, { eager: true })
     tradution: WordPair[];
 
-    @OneToMany(type => WordPair, pair => pair.grammar, { cascadeInsert: true, cascadeUpdate: true, eager: true })
+    @ApiModelProperty({ required: true, type: WordPair, isArray: true })
+    @OneToMany(type => WordPair, pair => pair.grammar, { eager: true })
     grammaire: WordPair[];
 
     @ApiModelProperty({ required: true })
@@ -37,32 +40,32 @@ export class Analyse extends DbAuditModel {
     liensExterne: string[];
 
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    argumentationScore: number;
+    @Column('real')
+    argumentationScore: number = 0;
 
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    vocabulaireScore: number;
+    @Column('real')
+    vocabulaireScore: number = 0;
 
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    traductionScore: number;
+    @Column('real')
+    traductionScore: number = 0;
 
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    grammaireScore: number;
+    @Column('real')
+    grammaireScore: number = 0;
 
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    igScore: number;
+    @Column('real')
+    igScore: number = 0;
 
     @ApiModelProperty({ required: true })
-    @Column('decimal')
-    liensExterneScore: number;
+    @Column('real')
+    liensExterneScore: number = 0;
 
     @ApiModelProperty({ required: false })
-    @Column('decimal')
-    totalScore: number;
+    @Column('real')
+    totalScore: number = -1;
 
     @ManyToOne(type => User, user => user.analyses)
     user: User;
