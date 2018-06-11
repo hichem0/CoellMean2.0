@@ -13,15 +13,16 @@ var core_1 = require("@angular/core");
 var index_1 = require("../_services/index");
 var router_1 = require("@angular/router");
 var MyexercicesComponent = /** @class */ (function () {
-    function MyexercicesComponent(exerciceService, router, activatedRoute) {
+    function MyexercicesComponent(exerciceService, router, activatedRoute, authenticationService) {
         this.exerciceService = exerciceService;
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.authenticationService = authenticationService;
         this.exercices = [];
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     MyexercicesComponent.prototype.ngOnInit = function () {
         this.loadAllExercices();
+        this.currentUser = this.authenticationService.user;
     };
     MyexercicesComponent.prototype.deleteExercice = function (_id) {
         var _this = this;
@@ -43,7 +44,8 @@ var MyexercicesComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [index_1.ExerciceService,
             router_1.Router,
-            router_1.ActivatedRoute])
+            router_1.ActivatedRoute,
+            index_1.AuthenticationService])
     ], MyexercicesComponent);
     return MyexercicesComponent;
 }());

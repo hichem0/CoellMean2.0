@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import {Group, User} from '../_models/index';
-import {GroupService} from "../_services/index";
+import {AuthenticationService, GroupService} from "../_services/index";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {UserService} from "../_services/user.service";
 
 @Component({
     moduleId: module.id,
@@ -15,17 +16,14 @@ export class MygroupsComponent implements OnInit {
 
     constructor(private groupService: GroupService,
                 private router: Router,
-                private activatedRoute: ActivatedRoute) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                private activatedRoute: ActivatedRoute,
+                private authenticationService: AuthenticationService
+    ) {
     }
 
     ngOnInit() {
         this.loadAllGroups();
-
-    }
-
-    deleteGroup(_id: string) {
-        this.groupService.delete(_id).subscribe(() => { this.loadAllGroups() });
+        this.currentUser = this.authenticationService.user;
     }
 
     private loadAllGroups() {

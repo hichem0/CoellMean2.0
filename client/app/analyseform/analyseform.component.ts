@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {AlertService, AnalyseService, ExerciceService} from '../_services/index';
+import {AlertService, AnalyseService, AuthenticationService, ExerciceService} from '../_services/index';
 import {Exercice, Paire, User} from "../_models/index";
 
 @Component({
@@ -34,8 +34,8 @@ export class AnalyseformComponent implements OnInit{
         private analyseService: AnalyseService,
         private exerciceService: ExerciceService,
         private alertService: AlertService,
-        private route: ActivatedRoute) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        private route: ActivatedRoute,
+        private authenticationService: AuthenticationService) {
     }
 
     ngOnInit(): void {
@@ -50,6 +50,7 @@ export class AnalyseformComponent implements OnInit{
         this.grammaire = [];
         this.ideeGlobales = [];
         this.liens = [];
+        this.currentUser = this.authenticationService.user;
     }
 
     loadExercice(): void{

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Group, User} from "../_models/index";
-import {AlertService, GroupService, UserService} from "../_services/index";
-import {ActivatedRoute, Router} from "@angular/router";
+import {AlertService, GroupService, UserService, AuthenticationService} from "../_services/index";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 
 
@@ -21,8 +21,9 @@ export class GroupdetailsComponent implements OnInit {
                 private userService: UserService,
                 private route: ActivatedRoute,
                 private alertService: AlertService,
-                private router: Router) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                private router: Router,
+                private authService: AuthenticationService,
+                private activatedRoute: ActivatedRoute,) {
     }
 
     ngOnInit() {
@@ -33,6 +34,7 @@ export class GroupdetailsComponent implements OnInit {
             .subscribe(params => {
                 this.groupName = params.groupname;
             });
+        this.currentUser = this.authService.user;
     }
 
     private getGroup() {
@@ -57,7 +59,7 @@ export class GroupdetailsComponent implements OnInit {
             .subscribe(
             data => {
                 this.alertService.success( username + ' ajouté au groupe', true);
-                this.router.navigate(['/group', { groupname: this.groupName } ]);
+                this.goToGroupDetails(this.group.groupname);
             },
             error => {
                 this.alertService.error(error);
@@ -71,7 +73,7 @@ export class GroupdetailsComponent implements OnInit {
             .subscribe(
                 data => {
                     this.alertService.success( username + ' supprimé au groupe', true);
-                    this.router.navigate(['/group', { groupname: this.groupName } ]);
+                    this.goToGroupDetails(this.group.groupname);
                 },
                 error => {
                     this.alertService.error(error);
@@ -79,8 +81,14 @@ export class GroupdetailsComponent implements OnInit {
                 });
     }
 
+    goToGroupDetails(groupname: string) {
+        const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+        queryParams['groupname'] = groupname;
+        this.router.navigate(['/group'], { queryParams: queryParams });
+    }
+
     private userInGroup(username: string){
-        if (username === this.group.adminname) {
+        if (username === this.group.admin.username) {
             return true;
         }
         for (let user of this.group.users) {
@@ -89,5 +97,9 @@ export class GroupdetailsComponent implements OnInit {
             }
         }
         return false;
+    }
+
+    deleteGroup() {
+        this.groupService.delete(this.group.id).subscribe(() => { this.router.navigate(['/mygroups']) });
     }
 }

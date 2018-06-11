@@ -12,4 +12,8 @@ export class AppComponent implements OnInit{
     ngOnInit(): void {
     }
 
+    private getCurrentUser() {
+        
+    }
+
 }

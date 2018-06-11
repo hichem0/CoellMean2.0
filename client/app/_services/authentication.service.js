@@ -11,30 +11,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
+var router_1 = require("@angular/router");
 require("rxjs/add/operator/map");
+require("rxjs/add/operator/mergeMap");
 var app_config_1 = require("../app.config");
 var AuthenticationService = /** @class */ (function () {
-    function AuthenticationService(http) {
+    function AuthenticationService(http, router) {
         this.http = http;
+        this.router = router;
+        this.user = this.me();
     }
     AuthenticationService.prototype.login = function (username, password) {
-        return this.http.post(app_config_1.appConfig.apiUrl + '/users/authenticate', { username: username, password: password })
-            .map(function (user) {
+        var _this = this;
+        return this.http.post(app_config_1.appConfig.apiUrl + '/auth/token', { username: username, password: password })
+            .mergeMap(function (token) {
             // login successful if there's a jwt token in the response
-            if (user && user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
+            if (token && token.access_token) {
+                // store  jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('accessToken', JSON.stringify(token.access_token));
             }
-            return user;
+            return _this.me();
         });
     };
     AuthenticationService.prototype.logout = function () {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('accessToken');
+        this.user = null;
+        this.router.navigate(['/login']);
+    };
+    AuthenticationService.prototype.me = function () {
+        var _this = this;
+        return this.http.get(app_config_1.appConfig.apiUrl + '/auth/me')
+            .map(function (user) {
+            _this.user = user;
+            return user;
+        });
     };
     AuthenticationService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.HttpClient])
+        __metadata("design:paramtypes", [http_1.HttpClient, router_1.Router])
     ], AuthenticationService);
     return AuthenticationService;
 }());

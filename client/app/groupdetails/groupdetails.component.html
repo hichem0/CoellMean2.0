@@ -1,7 +1,8 @@
 <link href="groupdetail.component.css" rel="stylesheet" />
 <div class="group-detail">
     <h1>{{groupName}}</h1>
-    Administrateur : {{group.adminname}}
+    <div (click)="deleteGroup()">Supprimer le groupe</div>
+    Administrateur : {{group.admin.firstName}} {{group.admin.lastName}} ({{group.admin.username}})
     <div class="list-users">
         <div>
             <h2>Liste de vos contacts</h2>

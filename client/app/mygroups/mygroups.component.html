@@ -4,10 +4,9 @@
 
     <div class="groups-container" *ngIf="groups">
         <div *ngFor="let group of groups">
-            <div class="group-card" *ngIf="currentUser && group.adminname === currentUser.username" (click)="goToGroupDetails(group.groupname)">
+            <div class="group-card" *ngIf="currentUser && group.admin.username === currentUser.username" (click)="goToGroupDetails(group.groupname)">
                 <h2>{{group.groupname}}</h2>
-                par {{group.adminname}}
-                <div><a (click)="deleteGroup(group._id)">X</a></div>
+                par {{group.admin.username}}
             </div>
         </div>
     </div>

@@ -9,22 +9,22 @@ export class ExerciceService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<Exercice[]>(appConfig.apiUrl + '/exercices');
+        return this.http.get<Exercice[]>(appConfig.apiUrl + '/exo');
     }
 
-    getById(_id: string) {
-        return this.http.get(appConfig.apiUrl + '/exercices/' + _id);
+    getById(id: string) {
+        return this.http.get(appConfig.apiUrl + '/exo/' + id);
     }
 
     create(exercice: Exercice) {
-        return this.http.post(appConfig.apiUrl + '/exercices/create', exercice);
+        return this.http.post(appConfig.apiUrl + '/exo', exercice);
     }
 
-    update(exercice: Exercice) {
-        return this.http.put(appConfig.apiUrl + '/exercices/' + exercice._id, exercice);
-    }
+    // update(exercice: Exercice) {
+    //     return this.http.put(appConfig.apiUrl + '/exo/' + exercice.id, exercice);
+    // }
 
-    delete(_id: string) {
-        return this.http.delete(appConfig.apiUrl + '/exercices/' + _id);
+    delete(id: string) {
+        return this.http.delete(appConfig.apiUrl + '/exo/' + id);
     }
 }

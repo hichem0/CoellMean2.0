@@ -17,19 +17,19 @@ var GroupService = /** @class */ (function () {
         this.http = http;
     }
     GroupService.prototype.getAll = function () {
-        return this.http.get(app_config_1.appConfig.apiUrl + '/groups');
+        return this.http.get(app_config_1.appConfig.apiUrl + '/group');
     };
-    GroupService.prototype.getById = function (_id) {
-        return this.http.get(app_config_1.appConfig.apiUrl + '/groups/' + _id);
+    GroupService.prototype.getById = function (id) {
+        return this.http.get(app_config_1.appConfig.apiUrl + '/group/' + id);
     };
     GroupService.prototype.create = function (group) {
-        return this.http.post(app_config_1.appConfig.apiUrl + '/groups/create', group);
+        return this.http.post(app_config_1.appConfig.apiUrl + '/group', group);
     };
     GroupService.prototype.update = function (group) {
-        return this.http.put(app_config_1.appConfig.apiUrl + '/groups/' + group._id, group);
+        return this.http.post(app_config_1.appConfig.apiUrl + '/group/' + group.id, group);
     };
-    GroupService.prototype.delete = function (_id) {
-        return this.http.delete(app_config_1.appConfig.apiUrl + '/groups/' + _id);
+    GroupService.prototype.delete = function (id) {
+        return this.http.delete(app_config_1.appConfig.apiUrl + '/group/' + id);
     };
     GroupService = __decorate([
         core_1.Injectable(),

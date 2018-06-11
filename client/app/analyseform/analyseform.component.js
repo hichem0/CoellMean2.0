@@ -13,15 +13,15 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
 var AnalyseformComponent = /** @class */ (function () {
-    function AnalyseformComponent(router, analyseService, exerciceService, alertService, route) {
+    function AnalyseformComponent(router, analyseService, exerciceService, alertService, route, authenticationService) {
         this.router = router;
         this.analyseService = analyseService;
         this.exerciceService = exerciceService;
         this.alertService = alertService;
         this.route = route;
+        this.authenticationService = authenticationService;
         this.analyse = {};
         this.loading = false;
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     AnalyseformComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -36,6 +36,7 @@ var AnalyseformComponent = /** @class */ (function () {
         this.grammaire = [];
         this.ideeGlobales = [];
         this.liens = [];
+        this.currentUser = this.authenticationService.user;
     };
     AnalyseformComponent.prototype.loadExercice = function () {
         var _this = this;
@@ -107,7 +108,8 @@ var AnalyseformComponent = /** @class */ (function () {
             index_1.AnalyseService,
             index_1.ExerciceService,
             index_1.AlertService,
-            router_1.ActivatedRoute])
+            router_1.ActivatedRoute,
+            index_1.AuthenticationService])
     ], AnalyseformComponent);
     return AnalyseformComponent;
 }());

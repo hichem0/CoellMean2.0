@@ -13,19 +13,16 @@ var core_1 = require("@angular/core");
 var index_1 = require("../_services/index");
 var router_1 = require("@angular/router");
 var MygroupsComponent = /** @class */ (function () {
-    function MygroupsComponent(groupService, router, activatedRoute) {
+    function MygroupsComponent(groupService, router, activatedRoute, authenticationService) {
         this.groupService = groupService;
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.authenticationService = authenticationService;
         this.groups = [];
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     MygroupsComponent.prototype.ngOnInit = function () {
         this.loadAllGroups();
-    };
-    MygroupsComponent.prototype.deleteGroup = function (_id) {
-        var _this = this;
-        this.groupService.delete(_id).subscribe(function () { _this.loadAllGroups(); });
+        this.currentUser = this.authenticationService.user;
     };
     MygroupsComponent.prototype.loadAllGroups = function () {
         var _this = this;
@@ -43,7 +40,8 @@ var MygroupsComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [index_1.GroupService,
             router_1.Router,
-            router_1.ActivatedRoute])
+            router_1.ActivatedRoute,
+            index_1.AuthenticationService])
     ], MygroupsComponent);
     return MygroupsComponent;
 }());

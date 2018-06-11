@@ -1,8 +1,8 @@
 import {User} from "./user";
 
 export class Group {
-    _id: string;
+    admin : User;
+    id: string;
     groupname: string;
-    adminname: string;
     users: User[];
 }
