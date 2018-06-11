@@ -1,5 +1,5 @@
 import { ApiBearerAuth, ApiImplicitParam, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import {Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post} from '@nestjs/common';
 import { ExerciceService } from './exercice.component';
 import { Exercice } from './exercise.entity';
 import { Group } from '../group/group.entity';
@@ -41,5 +41,21 @@ export class ExerciseController {
     @ApiImplicitParam({ type: Number, name: 'id', required: true })
     async deleteOne(@Param() { id }) {
         return this.exerciceService.delete(id);
+    }
+
+    @ApiResponse({ status: 200, description: 'The exercice have been linked', type: Exercice })
+    @ApiImplicitParam({ type: Number, name: 'id', required: true })
+    @ApiImplicitParam({ type: Number, name: 'groupId', required: true })
+    @Post(':id/linkTo/:groupId')
+    async linkToGroup(@Param() { id, groupId }): Promise<Exercice> {
+        return this.exerciceService.linkToGroup(id, groupId);
+    }
+
+    @ApiResponse({ status: 200, description: 'The exercice have been unlinked', type: Exercice })
+    @ApiImplicitParam({ type: Number, name: 'id', required: true })
+    @ApiImplicitParam({ type: Number, name: 'groupId', required: true })
+    @Post(':id/unlinkTo/:groupId')
+    async unlinkToGroup(@Param('id', new ParseIntPipe()) id, @Param('groupId', new ParseIntPipe()) groupId): Promise<Exercice> {
+        return this.exerciceService.unlinkToGroup(id, groupId);
     }
 }

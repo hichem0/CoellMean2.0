@@ -45,4 +45,8 @@ export class GroupService {
         group.users = group.users.filter(u => u.id !== user.id);
         return this.groupRepository.save(group);
     }
+
+    async save(group: Group): Promise<Group> {
+        return this.groupRepository.save(group);
+    }
 }

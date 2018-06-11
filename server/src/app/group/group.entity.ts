@@ -6,6 +6,7 @@ import { ApiModelProperty } from '@nestjs/swagger';
 import { Exclude, Type } from 'class-transformer';
 import { DbAuditModel } from '../../util/dbmodel.model';
 import { User } from '../user/user.entity';
+import { Exercice } from '../exercice/exercise.entity';
 
 @Entity()
 export class Group extends DbAuditModel{
@@ -22,5 +23,9 @@ export class Group extends DbAuditModel{
     @ManyToMany(type => User, user => user.membeGroups, { eager: true })
     @JoinTable()
     users: User[];
+
+    @ManyToMany(type => Exercice, exo => exo.groups, { eager: true })
+    @JoinTable()
+    exercices: Exercice[];
 
 }
