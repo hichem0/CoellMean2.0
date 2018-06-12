@@ -2,7 +2,7 @@ import {User} from "./user";
 import {Paire} from "./paire";
 
 export class Analyse {
-    _id: string;
+    id: string;
     utilisateur: User;
     idarticle: string;
     langue: string;
@@ -10,7 +10,7 @@ export class Analyse {
     vocabulaire: Paire[];
     tradution: Paire[];
     grammaire: Paire[];
-    ig: string[];
+    globalIdea: string[];
     liensExterne: string[];
     argumentationScore: string;
     vocabulaireScore: string;

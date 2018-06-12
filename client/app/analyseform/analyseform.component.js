@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
+var index_2 = require("../_models/index");
 var AnalyseformComponent = /** @class */ (function () {
     function AnalyseformComponent(router, analyseService, exerciceService, alertService, route, authenticationService) {
         this.router = router;
@@ -20,11 +21,25 @@ var AnalyseformComponent = /** @class */ (function () {
         this.alertService = alertService;
         this.route = route;
         this.authenticationService = authenticationService;
-        this.analyse = {};
+        this.langue = "english";
+        this.vocabulaire = [];
+        this.traduction = [];
+        this.grammaire = [];
+        this.ideeGlobales = [];
+        this.liens = [];
         this.loading = false;
+        this.motS = "";
+        this.syn = "";
+        this.motT = "";
+        this.trad = "";
+        this.motG = "";
+        this.anaG = "";
+        this.ig = "";
+        this.lien = "";
     }
     AnalyseformComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.analyse = new index_2.Analyse();
         this.route.queryParams
             .filter(function (params) { return params.id; })
             .subscribe(function (params) {
@@ -47,7 +62,7 @@ var AnalyseformComponent = /** @class */ (function () {
     };
     AnalyseformComponent.prototype.addVoc = function () {
         if (this.motS !== "" && this.syn !== "") {
-            this.paire = { mot1: this.motS, mot2: this.syn };
+            this.paire = { "key": this.motS, "value": this.syn };
             this.vocabulaire.push(this.paire);
             this.motS = "";
             this.syn = "";
@@ -55,7 +70,7 @@ var AnalyseformComponent = /** @class */ (function () {
     };
     AnalyseformComponent.prototype.addTrad = function () {
         if (this.motT !== "" && this.trad !== "") {
-            this.paire = { mot1: this.motT, mot2: this.trad };
+            this.paire = { "key": this.motT, "value": this.trad };
             this.traduction.push(this.paire);
             this.motT = "";
             this.trad = "";
@@ -63,7 +78,7 @@ var AnalyseformComponent = /** @class */ (function () {
     };
     AnalyseformComponent.prototype.addGramm = function () {
         if (this.motG !== "" && this.anaG !== "") {
-            this.paire = { mot1: this.motG, mot2: this.anaG };
+            this.paire = { "key": this.motG, "value": this.anaG };
             this.grammaire.push(this.paire);
             this.motG = "";
             this.anaG = "";
@@ -84,11 +99,11 @@ var AnalyseformComponent = /** @class */ (function () {
     AnalyseformComponent.prototype.createAnalyse = function () {
         var _this = this;
         this.loading = true;
-        this.analyse.createur = this.currentUser.username;
+        this.analyse.langue = this.langue;
         this.analyse.vocabulaire = this.vocabulaire;
-        this.analyse.traduction = this.traduction;
-        this.analyse.groupName = this.grammaire;
-        this.analyse.ig = this.ideeGlobales;
+        this.analyse.tradution = this.traduction;
+        this.analyse.grammaire = this.grammaire;
+        this.analyse.globalIdea = this.ideeGlobales;
         this.analyse.liensExterne = this.liens;
         this.analyseService.create(this.analyse)
             .subscribe(function (data) {

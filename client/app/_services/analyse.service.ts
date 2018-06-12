@@ -17,11 +17,7 @@ export class AnalyseService {
     }
 
     create(analyses: Analyse) {
-        return this.http.post(appConfig.apiUrl + '/analyses/create', analyses);
-    }
-
-    update(analyses: Analyse) {
-        return this.http.put(appConfig.apiUrl + '/analyses/' + analyses._id, analyses);
+        return this.http.post(appConfig.apiUrl + '/exo/' + analyses.idarticle + '/answer', analyses);
     }
 
     delete(_id: string) {

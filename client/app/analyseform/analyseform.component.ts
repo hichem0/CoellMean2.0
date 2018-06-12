@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {AlertService, AnalyseService, AuthenticationService, ExerciceService} from '../_services/index';
-import {Exercice, Paire, User} from "../_models/index";
+import {Analyse, Exercice, Paire, User} from "../_models/index";
 
 @Component({
     moduleId: module.id,
@@ -10,24 +10,25 @@ import {Exercice, Paire, User} from "../_models/index";
 })
 
 export class AnalyseformComponent implements OnInit{
-    analyse: any = {};
-    vocabulaire: Paire[];
-    traduction: Paire[];
-    grammaire: Paire[];
-    ideeGlobales: string[];
-    liens: string[];
+    analyse: Analyse;
+    langue: string = "english";
+    vocabulaire: Paire[] = [];
+    traduction: Paire[] = [];
+    grammaire: Paire[] = [];
+    ideeGlobales: string[] = [];
+    liens: string[] = [];
     loading = false;
     paire: Paire;
     currentUser: User;
-    exercice: any;
-    motS: string;
-    syn: string;
-    motT: string;
-    trad: string;
-    motG: string;
-    anaG: string;
-    ig: string;
-    lien: string;
+    exercice: Exercice;
+    motS: string = "";
+    syn: string = "";
+    motT: string = "";
+    trad: string = "";
+    motG: string = "";
+    anaG: string = "";
+    ig: string = "";
+    lien: string = "";
 
     constructor(
         private router: Router,
@@ -39,6 +40,7 @@ export class AnalyseformComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        this.analyse = new Analyse();
         this.route.queryParams
             .filter(params => params.id)
             .subscribe(params => {
@@ -62,7 +64,7 @@ export class AnalyseformComponent implements OnInit{
 
     addVoc(): void{
         if (this.motS !== "" && this.syn !== "") {
-            this.paire = {mot1: this.motS, mot2: this.syn};
+            this.paire = {"key": this.motS, "value": this.syn};
             this.vocabulaire.push(this.paire)
             this.motS = "";
             this.syn = "";
@@ -71,7 +73,7 @@ export class AnalyseformComponent implements OnInit{
 
     addTrad(): void{
         if (this.motT !== "" && this.trad !== "") {
-            this.paire = {mot1: this.motT, mot2: this.trad};
+            this.paire = {"key": this.motT, "value": this.trad};
             this.traduction.push(this.paire)
             this.motT = "";
             this.trad = "";
@@ -80,7 +82,7 @@ export class AnalyseformComponent implements OnInit{
 
     addGramm(): void{
         if (this.motG !== "" && this.anaG !== "") {
-            this.paire = {mot1: this.motG, mot2: this.anaG};
+            this.paire = {"key": this.motG, "value": this.anaG};
             this.grammaire.push(this.paire)
             this.motG = "";
             this.anaG = "";
@@ -103,11 +105,11 @@ export class AnalyseformComponent implements OnInit{
 
     createAnalyse(): void{
         this.loading = true;
-        this.analyse.createur = this.currentUser.username;
+        this.analyse.langue = this.langue;
         this.analyse.vocabulaire = this.vocabulaire;
-        this.analyse.traduction = this.traduction;
-        this.analyse.groupName = this.grammaire;
-        this.analyse.ig = this.ideeGlobales;
+        this.analyse.tradution = this.traduction;
+        this.analyse.grammaire = this.grammaire;
+        this.analyse.globalIdea = this.ideeGlobales;
         this.analyse.liensExterne = this.liens;
         this.analyseService.create(this.analyse)
             .subscribe(

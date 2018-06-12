@@ -23,10 +23,7 @@ var AnalyseService = /** @class */ (function () {
         return this.http.get(app_config_1.appConfig.apiUrl + '/analyses/' + _id);
     };
     AnalyseService.prototype.create = function (analyses) {
-        return this.http.post(app_config_1.appConfig.apiUrl + '/analyses/create', analyses);
-    };
-    AnalyseService.prototype.update = function (analyses) {
-        return this.http.put(app_config_1.appConfig.apiUrl + '/analyses/' + analyses._id, analyses);
+        return this.http.post(app_config_1.appConfig.apiUrl + '/exo/' + analyses.idarticle + '/answer', analyses);
     };
     AnalyseService.prototype.delete = function (_id) {
         return this.http.delete(app_config_1.appConfig.apiUrl + '/analyses/' + _id);

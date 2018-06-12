@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { appConfig } from '../app.config';
 import {Exercice, Group} from "../_models/index";
+import {E} from "@angular/core/src/render3";
 
 @Injectable()
 export class ExerciceService {
@@ -13,7 +14,7 @@ export class ExerciceService {
     }
 
     getById(id: string) {
-        return this.http.get(appConfig.apiUrl + '/exo/' + id);
+        return this.http.get<Exercice>(appConfig.apiUrl + '/exo/' + id);
     }
 
     create(exercice: Exercice) {
