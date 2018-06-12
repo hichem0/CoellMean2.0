@@ -7,6 +7,7 @@ import 'rxjs/add/operator/mergeMap';
 
 
 import { appConfig } from '../app.config';
+import {User} from "../_models";
 
 @Injectable()
 export class AuthenticationService {
@@ -37,7 +38,7 @@ export class AuthenticationService {
     }
 
     me() {
-        return this.http.get(appConfig.apiUrl + '/auth/me')
+        return this.http.get<User>(appConfig.apiUrl + '/auth/me')
             .map(user => {
                 this.user = user;
 

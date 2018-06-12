@@ -24,10 +24,12 @@ var GroupdetailsComponent = /** @class */ (function () {
         this.activatedRoute = activatedRoute;
         this.exercices = [];
         this.libExo = [];
+        this.myAnalyses = [];
         this.loading = false;
     }
     GroupdetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.loading = true;
         this.getGroup();
         this.route.queryParams
             .filter(function (params) { return params.groupname; })
@@ -64,6 +66,36 @@ var GroupdetailsComponent = /** @class */ (function () {
                 this.libExo.push(exo);
             }
         }
+        this.repartAnalyse();
+    };
+    GroupdetailsComponent.prototype.repartAnalyse = function () {
+        if (this.currentUser.id !== this.group.admin.id) {
+            for (var _i = 0, _a = this.group.exercices; _i < _a.length; _i++) {
+                var exo = _a[_i];
+                for (var _b = 0, _c = exo.resolutions; _b < _c.length; _b++) {
+                    var analyse = _c[_b];
+                    if (analyse.user.id === this.currentUser.id) {
+                        analyse.titleArticle = exo.title;
+                        analyse.idarticle = exo.id;
+                        this.myAnalyses.push(analyse);
+                    }
+                }
+            }
+        }
+        else {
+            for (var _d = 0, _e = this.group.exercices; _d < _e.length; _d++) {
+                var exo = _e[_d];
+                for (var _f = 0, _g = exo.resolutions; _f < _g.length; _f++) {
+                    var analyse = _g[_f];
+                    if (this.isMember(analyse.user.id)) {
+                        analyse.titleArticle = exo.title;
+                        analyse.idarticle = exo.id;
+                        this.myAnalyses.push(analyse);
+                    }
+                }
+            }
+        }
+        this.loading = false;
     };
     GroupdetailsComponent.prototype.groupContains = function (exo, exos) {
         var isPresent = false;
@@ -187,7 +219,17 @@ var GroupdetailsComponent = /** @class */ (function () {
         var flag = false;
         for (var _i = 0, _a = this.group.users; _i < _a.length; _i++) {
             var user = _a[_i];
-            if (user.username === this.currentUser.username) {
+            if (user.id === this.currentUser.id) {
+                flag = true;
+            }
+        }
+        return flag;
+    };
+    GroupdetailsComponent.prototype.isMember = function (userId) {
+        var flag = false;
+        for (var _i = 0, _a = this.group.users; _i < _a.length; _i++) {
+            var user = _a[_i];
+            if (user.id === userId) {
                 flag = true;
             }
         }
@@ -207,6 +249,35 @@ var GroupdetailsComponent = /** @class */ (function () {
             //this.alertService.error(error);
             _this.loading = false;
         });
+    };
+    GroupdetailsComponent.prototype.goAnalyse = function (id) {
+        var analyse = null;
+        for (var _i = 0, _a = this.myAnalyses; _i < _a.length; _i++) {
+            var a = _a[_i];
+            if (a.idarticle === id) {
+                analyse = a;
+            }
+        }
+        if (analyse !== null) {
+            var queryParams = Object.assign({});
+            queryParams['idAnalyse'] = analyse.id;
+            this.router.navigate(['/analyse'], { queryParams: queryParams });
+        }
+        else {
+            var queryParams = Object.assign({});
+            queryParams['idArticle'] = id;
+            this.router.navigate(['/analyse'], { queryParams: queryParams });
+        }
+    };
+    GroupdetailsComponent.prototype.modifAnalyse = function (analyse) {
+        var queryParams = Object.assign({});
+        queryParams['idAnalyse'] = analyse.id;
+        this.router.navigate(['/analyse'], { queryParams: queryParams });
+    };
+    GroupdetailsComponent.prototype.corriger = function (analyse) {
+        var queryParams = Object.assign({});
+        queryParams['idAnalyse'] = analyse.id;
+        this.router.navigate(['/correction'], { queryParams: queryParams });
     };
     GroupdetailsComponent.prototype.setUser = function (user) {
         this.currentUser = user;

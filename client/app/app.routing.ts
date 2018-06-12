@@ -21,6 +21,7 @@ const appRoutes: Routes = [
     { path: 'exercice/create', component: ExerciceformComponent},
     { path: 'profil', component: ProfilComponent},
     { path: 'analyse', component: AnalyseformComponent },
+    { path: 'correction', component: AnalyseformComponent},
 
 
     // otherwise redirect to home

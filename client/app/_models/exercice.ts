@@ -1,4 +1,5 @@
 import {User} from "./user";
+import {Analyse} from "./analyse";
 
 export class Exercice {
     id: string;
@@ -15,4 +16,5 @@ export class Exercice {
     maxGradeGlobalIdee: number;
     maxGradeArgumentation: number;
     maxGradeExternalLinks: number;
+    resolutions: Analyse[];
 }

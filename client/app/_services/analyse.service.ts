@@ -13,11 +13,15 @@ export class AnalyseService {
     }
 
     getById(_id: string) {
-        return this.http.get(appConfig.apiUrl + '/analyses/' + _id);
+        return this.http.get<Analyse>(appConfig.apiUrl + '/analyse/' + _id);
     }
 
-    create(analyses: Analyse) {
-        return this.http.post(appConfig.apiUrl + '/exo/' + analyses.idarticle + '/answer', analyses);
+    create(analyse: Analyse) {
+        return this.http.post(appConfig.apiUrl + '/exo/' + analyse.idarticle + '/answer', analyse);
+    }
+
+    grade(analyse: Analyse) {
+        return this.http.post(appConfig.apiUrl + '/analyse/' + analyse.idarticle + '/grade', analyse)
     }
 
     delete(_id: string) {

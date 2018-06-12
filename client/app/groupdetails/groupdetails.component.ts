@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Exercice, Group, User} from "../_models/index";
+import {Analyse, Exercice, Group, User} from "../_models/index";
 import {AlertService, GroupService, UserService, AuthenticationService, ExerciceService} from "../_services/index";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
@@ -15,6 +15,7 @@ export class GroupdetailsComponent implements OnInit {
     group: Group;
     exercices: Exercice[] = [];
     libExo: Exercice[] = [];
+    myAnalyses: Analyse[] = [];
     users: User[];
     groupName: string;
     loading = false;
@@ -29,6 +30,7 @@ export class GroupdetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.loading = true;
         this.getGroup();
         this.route.queryParams
             .filter(params => params.groupname)
@@ -64,6 +66,32 @@ export class GroupdetailsComponent implements OnInit {
                 this.libExo.push(exo);
             }
         }
+        this.repartAnalyse();
+    }
+
+    private repartAnalyse() {
+        if(this.currentUser.id !== this.group.admin.id) {
+            for(let exo of this.group.exercices) {
+                for(let analyse of exo.resolutions) {
+                    if(analyse.user.id === this.currentUser.id) {
+                        analyse.titleArticle = exo.title;
+                        analyse.idarticle = exo.id;
+                        this.myAnalyses.push(analyse);
+                    }
+                }
+            }
+        } else {
+            for(let exo of this.group.exercices) {
+                for(let analyse of exo.resolutions) {
+                    if(this.isMember(analyse.user.id)) {
+                        analyse.titleArticle = exo.title;
+                        analyse.idarticle = exo.id;
+                        this.myAnalyses.push(analyse);
+                    }
+                }
+            }
+        }
+        this.loading = false;
     }
 
     private groupContains(exo: Exercice, exos: Exercice[]) {
@@ -201,7 +229,17 @@ export class GroupdetailsComponent implements OnInit {
     beMember() {
         let flag = false;
         for (let user of this.group.users){
-            if (user.username === this.currentUser.username) {
+            if (user.id === this.currentUser.id) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    isMember(userId: string){
+        let flag = false;
+        for (let user of this.group.users){
+            if (user.id === userId) {
                 flag = true;
             }
         }
@@ -225,7 +263,38 @@ export class GroupdetailsComponent implements OnInit {
                 });
     }
 
-    private setUser(user: any) {
+    goAnalyse(id: string) {
+        let analyse: Analyse = null;
+
+        for(let a of this.myAnalyses){
+            if(a.idarticle === id) {
+                analyse = a;
+            }
+        }
+        if(analyse !== null) {
+            const queryParams: Params = Object.assign({});
+            queryParams['idAnalyse'] = analyse.id;
+            this.router.navigate(['/analyse'], { queryParams: queryParams });
+        } else {
+            const queryParams: Params = Object.assign({});
+            queryParams['idArticle'] = id;
+            this.router.navigate(['/analyse'], { queryParams: queryParams });
+        }
+    }
+
+    modifAnalyse(analyse: Analyse) {
+        const queryParams: Params = Object.assign({});
+        queryParams['idAnalyse'] = analyse.id;
+        this.router.navigate(['/analyse'], { queryParams: queryParams });
+    }
+
+    corriger(analyse: Analyse) {
+        const queryParams: Params = Object.assign({});
+        queryParams['idAnalyse'] = analyse.id;
+        this.router.navigate(['/correction'], { queryParams: queryParams });
+    }
+
+    private setUser(user: User) {
         this.currentUser = user;
     }
 }

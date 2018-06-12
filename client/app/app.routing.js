@@ -21,6 +21,7 @@ var appRoutes = [
     { path: 'exercice/create', component: index_8.ExerciceformComponent },
     { path: 'profil', component: index_9.ProfilComponent },
     { path: 'analyse', component: analyseform_component_1.AnalyseformComponent },
+    { path: 'correction', component: analyseform_component_1.AnalyseformComponent },
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

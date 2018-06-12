@@ -1,16 +1,11 @@
 ﻿<div>
-    <h1>Bonjour {{currentUser.username}} !</h1> <a (click)="logout()">Déconnexion</a>
-    <ul>
-
-        <li *ngFor="let user of users">
-            {{user.username}} ({{user.firstName}} {{user.lastName}})
-            - <a (click)="deleteUser(user.id)">Delete</a>
-        </li>
-    </ul>
+    <h1>Hello {{currentUser.username}} !</h1>
 
     <p><a [routerLink]="['/mygroups']"> Gestion de vos groupes de travail</a></p>
 
+    <p><a [routerLink]="['/exercice/create']">Créez votre propre exercice !</a></p>
+
     <p><a [routerLink]="['/profil']">Accedez à vos information personnelles</a></p>
 
-    <p><a [routerLink]="['/exercice/create']">Créez votre propre exercice !</a></p>
+    <p><a (click)="logout()">Déconnexion</a></p>
 </div>

@@ -1,9 +1,10 @@
 import {User} from "./user";
 import {Paire} from "./paire";
+import {Exercice} from "./exercice";
 
 export class Analyse {
     id: string;
-    utilisateur: User;
+    user: User;
     idarticle: string;
     langue: string;
     argumentation: string;
@@ -19,4 +20,6 @@ export class Analyse {
     igScore: string;
     liensExterneScore: string;
     totalScore: string;
+    titleArticle?: string;
+    exercice?: Exercice;
 }
