@@ -29,13 +29,11 @@ export class MygroupsComponent implements OnInit {
     }
 
     private repartGroups() {
-        console.log(this.groups.length);
         this.myGroups = [];
         this.memberGroups = [];
         this.otherGroups = [];
 
         for( let group of this.groups) {
-            console.log(group.admin.username + " est l'admin et " + this.currentUser.username + " est le user");
             if(group.admin.username === this.currentUser.username) {
                 this.myGroups.push(group);
             } else if(this.beMember(group)){

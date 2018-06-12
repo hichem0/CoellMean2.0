@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { appConfig } from '../app.config';
 import {Group} from "../_models/group";
+import {User} from "../_models";
 
 @Injectable()
 export class GroupService {
@@ -34,5 +35,9 @@ export class GroupService {
 
     leaveGroup(group: Group) {
         return this.http.post(appConfig.apiUrl + '/group/' + group.id + '/leave', group);
+    }
+
+    kickUser(group: Group, user: User) {
+        return this.http.post( appConfig.apiUrl + '/group/' + group.id + '/kickUser/' + user.id, group);
     }
 }

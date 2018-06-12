@@ -14,13 +14,16 @@ var index_1 = require("../_services/index");
 var router_1 = require("@angular/router");
 require("rxjs/add/operator/filter");
 var GroupdetailsComponent = /** @class */ (function () {
-    function GroupdetailsComponent(groupService, route, alertService, router, authService, activatedRoute) {
+    function GroupdetailsComponent(groupService, exerciceService, route, alertService, router, authService, activatedRoute) {
         this.groupService = groupService;
+        this.exerciceService = exerciceService;
         this.route = route;
         this.alertService = alertService;
         this.router = router;
         this.authService = authService;
         this.activatedRoute = activatedRoute;
+        this.exercices = [];
+        this.libExo = [];
         this.loading = false;
     }
     GroupdetailsComponent.prototype.ngOnInit = function () {
@@ -42,9 +45,35 @@ var GroupdetailsComponent = /** @class */ (function () {
                 var group = groups_1[_i];
                 if (group.groupname === _this.groupName) {
                     _this.group = group;
+                    _this.getExercices();
                 }
             }
         });
+    };
+    GroupdetailsComponent.prototype.getExercices = function () {
+        var _this = this;
+        this.exerciceService.getAll().subscribe(function (exercices) {
+            _this.exercices = exercices;
+            _this.repartExercices();
+        });
+    };
+    GroupdetailsComponent.prototype.repartExercices = function () {
+        for (var _i = 0, _a = this.exercices; _i < _a.length; _i++) {
+            var exo = _a[_i];
+            if (!this.groupContains(exo, this.group.exercices)) {
+                this.libExo.push(exo);
+            }
+        }
+    };
+    GroupdetailsComponent.prototype.groupContains = function (exo, exos) {
+        var isPresent = false;
+        for (var _i = 0, exos_1 = exos; _i < exos_1.length; _i++) {
+            var e = exos_1[_i];
+            if (e.id === exo.id) {
+                isPresent = true;
+            }
+        }
+        return isPresent;
     };
     GroupdetailsComponent.prototype.addUserAtGroup = function (username) {
         var _this = this;
@@ -91,7 +120,7 @@ var GroupdetailsComponent = /** @class */ (function () {
     };
     GroupdetailsComponent.prototype.deleteGroup = function () {
         var _this = this;
-        if (confirm("Confirmer la suppresion du group ? ")) {
+        if (confirm("Confirmer la suppresion du groupe ? ")) {
             this.groupService.delete(this.group.id).subscribe(function () { _this.router.navigate(['/mygroups']); });
         }
     };
@@ -118,6 +147,39 @@ var GroupdetailsComponent = /** @class */ (function () {
             });
         }
     };
+    GroupdetailsComponent.prototype.kick = function (user) {
+        var _this = this;
+        if (confirm('Confirmer l\'exclusion de ' + user.username + ' ?')) {
+            this.groupService.kickUser(this.group, user)
+                .subscribe(function (data) {
+                var indiceUser = _this.group.users.indexOf(user, 0);
+                if (indiceUser > -1) {
+                    _this.group.users.splice(indiceUser, 1);
+                }
+                _this.alertService.success(user.username + ' a était exclus', true);
+            }, function (error) {
+                //this.alertService.error(error);
+                _this.loading = false;
+            });
+        }
+    };
+    GroupdetailsComponent.prototype.delExo = function (exercice) {
+        var _this = this;
+        if (confirm('Confirmer la desactivation de l\'exercice ?')) {
+            this.exerciceService.unlinkTo(exercice, this.group)
+                .subscribe(function (data) {
+                var indiceExo = _this.group.exercices.indexOf(exercice, 0);
+                if (indiceExo > -1) {
+                    _this.group.exercices.splice(indiceExo, 1);
+                    _this.libExo.push(exercice);
+                }
+                _this.alertService.success(exercice.title + ' a était désactivé', true);
+            }, function (error) {
+                //this.alertService.error(error);
+                _this.loading = false;
+            });
+        }
+    };
     GroupdetailsComponent.prototype.back = function () {
         this.router.navigate(['/mygroups']);
     };
@@ -131,6 +193,21 @@ var GroupdetailsComponent = /** @class */ (function () {
         }
         return flag;
     };
+    GroupdetailsComponent.prototype.addExo = function (exo) {
+        var _this = this;
+        this.exerciceService.linkTo(exo, this.group)
+            .subscribe(function (data) {
+            var indiceExo = _this.libExo.indexOf(exo, 0);
+            if (indiceExo > -1) {
+                _this.libExo.splice(indiceExo, 1);
+                _this.group.exercices.push(exo);
+            }
+            _this.alertService.success(exo.title + ' est maintenant visible', true);
+        }, function (error) {
+            //this.alertService.error(error);
+            _this.loading = false;
+        });
+    };
     GroupdetailsComponent.prototype.setUser = function (user) {
         this.currentUser = user;
     };
@@ -140,6 +217,7 @@ var GroupdetailsComponent = /** @class */ (function () {
             templateUrl: 'groupdetails.component.html'
         }),
         __metadata("design:paramtypes", [index_1.GroupService,
+            index_1.ExerciceService,
             router_1.ActivatedRoute,
             index_1.AlertService,
             router_1.Router,

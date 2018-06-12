@@ -9,10 +9,10 @@ export class Exercice {
     creator: User;
     domain: string;
     lang: string;
-    maxGradeVocab: string;
-    maxGradeTrad: string;
-    maxGradeGramar: string;
-    maxGradeGlobalIdee: string;
-    maxGradeArgumentation: string;
-    maxGradeExternalLinks: string;
+    maxGradeVocab: number;
+    maxGradeTrad: number;
+    maxGradeGramar: number;
+    maxGradeGlobalIdee: number;
+    maxGradeArgumentation: number;
+    maxGradeExternalLinks: number;
 }

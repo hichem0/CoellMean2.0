@@ -25,11 +25,14 @@ var ExerciceService = /** @class */ (function () {
     ExerciceService.prototype.create = function (exercice) {
         return this.http.post(app_config_1.appConfig.apiUrl + '/exo', exercice);
     };
-    // update(exercice: Exercice) {
-    //     return this.http.put(appConfig.apiUrl + '/exo/' + exercice.id, exercice);
-    // }
     ExerciceService.prototype.delete = function (id) {
         return this.http.delete(app_config_1.appConfig.apiUrl + '/exo/' + id);
+    };
+    ExerciceService.prototype.linkTo = function (exercice, group) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/exo/' + exercice.id + '/linkTo/' + group.id, exercice);
+    };
+    ExerciceService.prototype.unlinkTo = function (exercice, group) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/exo/' + exercice.id + '/unlinkTo/' + group.id, exercice);
     };
     ExerciceService = __decorate([
         core_1.Injectable(),

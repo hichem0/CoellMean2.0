@@ -37,6 +37,9 @@ var GroupService = /** @class */ (function () {
     GroupService.prototype.leaveGroup = function (group) {
         return this.http.post(app_config_1.appConfig.apiUrl + '/group/' + group.id + '/leave', group);
     };
+    GroupService.prototype.kickUser = function (group, user) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/group/' + group.id + '/kickUser/' + user.id, group);
+    };
     GroupService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.HttpClient])

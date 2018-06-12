@@ -24,13 +24,11 @@ var MygroupsComponent = /** @class */ (function () {
         this.loadAllGroups();
     };
     MygroupsComponent.prototype.repartGroups = function () {
-        console.log(this.groups.length);
         this.myGroups = [];
         this.memberGroups = [];
         this.otherGroups = [];
         for (var _i = 0, _a = this.groups; _i < _a.length; _i++) {
             var group = _a[_i];
-            console.log(group.admin.username + " est l'admin et " + this.currentUser.username + " est le user");
             if (group.admin.username === this.currentUser.username) {
                 this.myGroups.push(group);
             }
