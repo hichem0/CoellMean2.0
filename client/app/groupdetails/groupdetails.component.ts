@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Group, User} from "../_models/index";
-import {AlertService, GroupService, UserService, AuthenticationService} from "../_services/index";
+import {Exercice, Group, User} from "../_models/index";
+import {AlertService, GroupService, UserService, AuthenticationService, ExerciceService} from "../_services/index";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 
@@ -13,11 +13,14 @@ import 'rxjs/add/operator/filter';
 export class GroupdetailsComponent implements OnInit {
     currentUser: User;
     group: Group;
+    exercices: Exercice[] = [];
+    libExo: Exercice[] = [];
     users: User[];
     groupName: string;
     loading = false;
 
     constructor(private groupService: GroupService,
+                private exerciceService: ExerciceService,
                 private route: ActivatedRoute,
                 private alertService: AlertService,
                 private router: Router,
@@ -42,9 +45,35 @@ export class GroupdetailsComponent implements OnInit {
             for (let group of groups) {
                 if (group.groupname === this.groupName) {
                     this.group = group;
+                    this.getExercices();
                 }
             }
         });
+    }
+
+    private getExercices() {
+        this.exerciceService.getAll().subscribe( exercices => {
+            this.exercices = exercices;
+            this.repartExercices();
+        })
+    }
+
+    private repartExercices() {
+        for(let exo of this.exercices) {
+            if(!this.groupContains(exo, this.group.exercices)) {
+                this.libExo.push(exo);
+            }
+        }
+    }
+
+    private groupContains(exo: Exercice, exos: Exercice[]) {
+        let isPresent = false;
+        for(let e of exos) {
+            if (e.id === exo.id) {
+                isPresent = true;
+            }
+        }
+        return isPresent;
     }
 
     private addUserAtGroup(username: string) {
@@ -96,7 +125,7 @@ export class GroupdetailsComponent implements OnInit {
     }
 
     deleteGroup() {
-        if(confirm("Confirmer la suppresion du group ? ")) {
+        if(confirm("Confirmer la suppresion du groupe ? ")) {
             this.groupService.delete(this.group.id).subscribe(() => { this.router.navigate(['/mygroups']) });
         }
     }
@@ -128,6 +157,43 @@ export class GroupdetailsComponent implements OnInit {
         }
     }
 
+    kick(user: User) {
+        if(confirm('Confirmer l\'exclusion de ' + user.username + ' ?')){
+            this.groupService.kickUser(this.group, user)
+                .subscribe(
+                    data => {
+                        let indiceUser = this.group.users.indexOf(user, 0);
+                        if (indiceUser > -1) {
+                            this.group.users.splice(indiceUser, 1);
+                        }
+                        this.alertService.success( user.username + ' a était exclus', true);
+                    },
+                    error => {
+                        //this.alertService.error(error);
+                        this.loading = false;
+                    });
+        }
+    }
+
+    delExo(exercice: Exercice) {
+        if(confirm('Confirmer la desactivation de l\'exercice ?')) {
+            this.exerciceService.unlinkTo(exercice, this.group)
+                .subscribe(
+                    data => {
+                        let indiceExo = this.group.exercices.indexOf(exercice, 0);
+                        if (indiceExo > -1) {
+                            this.group.exercices.splice(indiceExo, 1);
+                            this.libExo.push(exercice);
+                        }
+                        this.alertService.success( exercice.title + ' a était désactivé', true);
+                    },
+                    error => {
+                        //this.alertService.error(error);
+                        this.loading = false;
+                    });
+        }
+    }
+
     back(){
         this.router.navigate(['/mygroups']);
     }
@@ -140,6 +206,23 @@ export class GroupdetailsComponent implements OnInit {
             }
         }
         return flag;
+    }
+
+    addExo(exo: Exercice) {
+        this.exerciceService.linkTo(exo, this.group)
+            .subscribe(
+                data => {
+                    let indiceExo = this.libExo.indexOf(exo, 0);
+                    if (indiceExo > -1) {
+                        this.libExo.splice(indiceExo, 1);
+                        this.group.exercices.push(exo);
+                    }
+                    this.alertService.success( exo.title + ' est maintenant visible', true);
+                },
+                error => {
+                    //this.alertService.error(error);
+                    this.loading = false;
+                });
     }
 
     private setUser(user: any) {

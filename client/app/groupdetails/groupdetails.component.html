@@ -13,12 +13,48 @@
         <button class="back" (click)="back()">Retour</button>
     </div>
 </div>
-<div class="group-detail" *ngIf=" group && group.users.length > 0">
-    Membres du groupe :
-    <div *ngFor="let user of group.users">
-         - {{user.username}}
+<div class="group-detail" *ngIf=" group && currentUser">
+    <div class="user-list">
+        <table class="table-user">
+            <tr>
+                <th>MEMBRES</th>
+            </tr>
+            <tr *ngIf="group.users.length === 0">
+                <td>Aucun membre dans ce groupe ...</td>
+            </tr>
+            <tr *ngFor="let user of group.users" class="tr-users">
+                <td>{{user.username}}</td>
+                <td *ngIf="group.admin.username === currentUser.username" (click)="kick(user)" class="kicker">X</td>
+            </tr>
+        </table>
     </div>
-</div>
-<div class="group-detail" *ngIf="group && group.users.length === 0">
-    Aucun membre dans ce groupe ...
+    <div class="exo-list">
+        <table class="table-exo">
+            <tr>
+                <th>EXERCICES A FAIRE</th>
+            </tr>
+            <tr *ngIf="group.exercices.length === 0">
+                <td>Aucun exercice affecté à ce groupe ...</td>
+            </tr>
+            <tr *ngFor="let exercice of group.exercices" class="tr-exo">
+                <td>{{exercice.title}}</td>
+                <td *ngIf="group.admin.username === currentUser.username" (click)="delExo(exercice)" class="kicker">X</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="exo-list" *ngIf="group.admin.username === currentUser.username">
+        <table class="table-exo">
+            <tr>
+                <th>LIBRAIRIE D'EXERCICES</th>
+            </tr>
+            <tr *ngIf="libExo.length === 0">
+                <td>Aucun exercice disponible ...</td>
+            </tr>
+            <tr *ngFor="let exercice of libExo" class="tr-exo">
+                <td>{{exercice.title}}</td>
+                <td *ngIf="group.admin.username === currentUser.username" (click)="addExo(exercice)" class="exo-adder">+</td>
+            </tr>
+        </table>
+    </div>
 </div>

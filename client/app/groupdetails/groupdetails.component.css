@@ -6,6 +6,13 @@
     justify-content: space-between;
 }
 
+.group-detail {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
 .title-area {
     display: flex;
     justify-content: center;
@@ -43,4 +50,52 @@
 .title {
     font-size: 32px;
     font-weight: bold;
+}
+
+.user-list {
+    background-color: whitesmoke;
+    padding: 20px;
+    box-shadow: 3px 3px 10px;
+    height: 400px;
+    width: 170px;
+    overflow: scroll;
+}
+
+.table-user {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.tr-users:hover {
+    background-color: #dbdbdb;
+
+}
+
+.exo-list {
+    background-color: whitesmoke;
+    padding: 20px;
+    box-shadow: 3px 3px 10px;
+    height: 400px;
+    width: 220px;
+    overflow: scroll;
+}
+
+.table-exo {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.tr-exo:hover {
+    background-color: #dbdbdb;
+
+}
+
+.kicker {
+    color: #ff002b;
+    cursor: pointer;
+}
+
+.exo-adder {
+    color: #00cf3c;
+    cursor: pointer;
 }
