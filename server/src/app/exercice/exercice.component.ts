@@ -5,6 +5,7 @@ import { Exercice } from './exercise.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from '../group/group.entity';
 import {GroupService} from '../group/group.service';
+import {uniqFilter} from '../utils';
 
 @Component()
 export class ExerciceService {
@@ -37,7 +38,7 @@ export class ExerciceService {
     async linkToGroup(exoId: number, groupId: number): Promise<Exercice> {
         const group = (await this.groupService.findById(groupId)).orElseThrow(() => new NotFoundException());
         const exo = (await this.findById(exoId)).orElseThrow(() => new NotFoundException());
-        group.exercices = [...group.exercices, exo].filter((x, i, a) => a.indexOf(x) === i);
+        group.exercices = [...group.exercices, exo].filter(uniqFilter);
         await this.groupService.save(group);
         return (await this.findById(exoId)).orElseThrow(() => new NotFoundException());
     }

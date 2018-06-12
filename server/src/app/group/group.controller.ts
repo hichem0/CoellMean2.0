@@ -1,5 +1,5 @@
 import { ApiBearerAuth, ApiImplicitParam, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { Group } from './group.entity';
 import { User } from '../user/user.entity';
@@ -35,6 +35,19 @@ export class GroupController {
     @ApiImplicitParam({ type: Number, name: 'id', required: true })
     async leaveGroup(@Param() { id }, @UserConnected() user: User): Promise<Group> {
         return this.groupService.leaveGroup(id, user);
+    }
+
+    @Post(':id/kickUser/:userId')
+    @ApiResponse({ status: 201, description: 'The user has been kicked from the group.', type: Group })
+    @ApiResponse({ status: 404, description: 'The group was not found.', type: Group })
+    @ApiImplicitParam({ type: Number, name: 'id', required: true })
+    @ApiImplicitParam({ type: Number, name: 'userId', required: true })
+    async kickUserFromGroup(
+        @Param('id', new ParseIntPipe()) id,
+        @Param('userId', new ParseIntPipe()) userId,
+        @UserConnected() user: User,
+        ): Promise<Group> {
+        return this.groupService.kickUserFromGroup(id, userId, user);
     }
 
     @Get()
