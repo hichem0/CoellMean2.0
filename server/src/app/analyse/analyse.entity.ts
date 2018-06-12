@@ -67,6 +67,6 @@ export class Analyse extends DbAuditModel {
     @Column('real')
     totalScore: number = -1;
 
-    @ManyToOne(type => User, user => user.analyses)
+    @ManyToOne(type => User, user => user.analyses, { eager: true })
     user: User;
 }
