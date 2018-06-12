@@ -2,6 +2,10 @@
     cursor: pointer;
 }
 
+body {
+    background-color: #eeeeee;
+}
+
 .header {
     margin: 0;
     background: #309cca;

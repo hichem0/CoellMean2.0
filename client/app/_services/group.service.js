@@ -31,6 +31,12 @@ var GroupService = /** @class */ (function () {
     GroupService.prototype.delete = function (id) {
         return this.http.delete(app_config_1.appConfig.apiUrl + '/group/' + id);
     };
+    GroupService.prototype.joinGroup = function (group) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/group/' + group.id + '/join', group);
+    };
+    GroupService.prototype.leaveGroup = function (group) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/group/' + group.id + '/leave', group);
+    };
     GroupService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.HttpClient])

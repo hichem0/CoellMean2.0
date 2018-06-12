@@ -22,16 +22,54 @@ var MygroupsComponent = /** @class */ (function () {
     }
     MygroupsComponent.prototype.ngOnInit = function () {
         this.loadAllGroups();
-        this.currentUser = this.authenticationService.user;
+    };
+    MygroupsComponent.prototype.repartGroups = function () {
+        console.log(this.groups.length);
+        this.myGroups = [];
+        this.memberGroups = [];
+        this.otherGroups = [];
+        for (var _i = 0, _a = this.groups; _i < _a.length; _i++) {
+            var group = _a[_i];
+            console.log(group.admin.username + " est l'admin et " + this.currentUser.username + " est le user");
+            if (group.admin.username === this.currentUser.username) {
+                this.myGroups.push(group);
+            }
+            else if (this.beMember(group)) {
+                this.memberGroups.push(group);
+            }
+            else if (!this.beMember(group) && group.admin.username !== this.currentUser.username) {
+                this.otherGroups.push(group);
+            }
+        }
     };
     MygroupsComponent.prototype.loadAllGroups = function () {
         var _this = this;
-        this.groupService.getAll().subscribe(function (groups) { _this.groups = groups; });
+        this.groupService.getAll().subscribe(function (groups) {
+            _this.groups = groups;
+            _this.authenticationService.me()
+                .subscribe(function (user) {
+                _this.setUser(user);
+            });
+        });
     };
     MygroupsComponent.prototype.goToGroupDetails = function (groupname) {
         var queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
         queryParams['groupname'] = groupname;
         this.router.navigate(['/group'], { queryParams: queryParams });
+    };
+    MygroupsComponent.prototype.beMember = function (group) {
+        var flag = false;
+        for (var _i = 0, _a = group.users; _i < _a.length; _i++) {
+            var user = _a[_i];
+            if (user.username === this.currentUser.username) {
+                flag = true;
+            }
+        }
+        return flag;
+    };
+    MygroupsComponent.prototype.setUser = function (user) {
+        this.currentUser = user;
+        this.repartGroups();
     };
     MygroupsComponent = __decorate([
         core_1.Component({

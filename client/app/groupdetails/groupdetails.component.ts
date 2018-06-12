@@ -18,7 +18,6 @@ export class GroupdetailsComponent implements OnInit {
     loading = false;
 
     constructor(private groupService: GroupService,
-                private userService: UserService,
                 private route: ActivatedRoute,
                 private alertService: AlertService,
                 private router: Router,
@@ -28,13 +27,14 @@ export class GroupdetailsComponent implements OnInit {
 
     ngOnInit() {
         this.getGroup();
-        this.loadAllUsers();
         this.route.queryParams
             .filter(params => params.groupname)
             .subscribe(params => {
                 this.groupName = params.groupname;
             });
-        this.currentUser = this.authService.user;
+        this.authService.me().subscribe( user => {
+            this.setUser(user);
+        });
     }
 
     private getGroup() {
@@ -45,10 +45,6 @@ export class GroupdetailsComponent implements OnInit {
                 }
             }
         });
-    }
-
-    private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users; });
     }
 
     private addUserAtGroup(username: string) {
@@ -100,6 +96,53 @@ export class GroupdetailsComponent implements OnInit {
     }
 
     deleteGroup() {
-        this.groupService.delete(this.group.id).subscribe(() => { this.router.navigate(['/mygroups']) });
+        if(confirm("Confirmer la suppresion du group ? ")) {
+            this.groupService.delete(this.group.id).subscribe(() => { this.router.navigate(['/mygroups']) });
+        }
+    }
+
+    join() {
+        this.groupService.joinGroup(this.group)
+            .subscribe(
+                data => {
+                    this.alertService.success( 'Vous avez rejoint le groupe', true);
+                    this.group.users.push(this.currentUser);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
+    }
+
+    leave() {
+        if(confirm('Confirmer le départ du groupe ?')){
+            this.groupService.leaveGroup(this.group)
+                .subscribe(
+                    data => {
+                        this.router.navigate(['/mygroups']);
+                    },
+                    error => {
+                        //this.alertService.error(error);
+                        this.loading = false;
+                    });
+        }
+    }
+
+    back(){
+        this.router.navigate(['/mygroups']);
+    }
+
+    beMember() {
+        let flag = false;
+        for (let user of this.group.users){
+            if (user.username === this.currentUser.username) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    private setUser(user: any) {
+        this.currentUser = user;
     }
 }

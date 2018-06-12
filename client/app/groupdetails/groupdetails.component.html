@@ -1,35 +1,24 @@
-<link href="groupdetail.component.css" rel="stylesheet" />
-<div class="group-detail">
-    <h1>{{groupName}}</h1>
-    <div (click)="deleteGroup()">Supprimer le groupe</div>
-    Administrateur : {{group.admin.firstName}} {{group.admin.lastName}} ({{group.admin.username}})
-    <div class="list-users">
+<link href="groupdetails.component.css" rel="stylesheet" />
+<div class="group-title" *ngIf="group && currentUser">
+    <div class="title-area">
         <div>
-            <h2>Liste de vos contacts</h2>
-            <div *ngIf="users && users.length > 0">
-                <div *ngFor="let user of users">
-                    <div *ngIf="!userInGroup(user.username)">
-                        <span (click)="addUserAtGroup(user.username)">{{user.firstName}} {{user.lastName}} ( + )
-                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="users && !users.length > 0">
-                Aucun Utilisateur dans vos contacts
-            </div>
+            <div class="title">{{group.groupname}}</div>
+            <div>par {{group.admin.username}}</div>
         </div>
-        <div>
-            <h2>Liste des membres</h2>
-            <div *ngIf="group.users && group.users.length > 0">
-                <div *ngFor="let user of group.users">
-                    <span (click)="deleteUserAtGroup(user.username)">{{user.firstName}} {{user.lastName}} ( - )</span>
-                </div>
-            </div>
-            <div *ngIf="group.users && !group.users.length > 0">
-                Aucun membre ...
-            </div>
-        </div>
-        <div></div>
     </div>
+    <div class="option-area" *ngIf="currentUser">
+        <button class="join" *ngIf="group.admin.username !== currentUser.username && !beMember()" (click)="join()">Rejoindre</button>
+        <button class="leave" *ngIf="group.admin.username !== currentUser.username && beMember()" (click)="leave()">Quitter</button>
+        <button class="leave" *ngIf="group.admin.username === currentUser.username" (click)="deleteGroup()">Supprimer</button>
+        <button class="back" (click)="back()">Retour</button>
+    </div>
+</div>
+<div class="group-detail" *ngIf=" group && group.users.length > 0">
+    Membres du groupe :
+    <div *ngFor="let user of group.users">
+         - {{user.username}}
+    </div>
+</div>
+<div class="group-detail" *ngIf="group && group.users.length === 0">
+    Aucun membre dans ce groupe ...
 </div>

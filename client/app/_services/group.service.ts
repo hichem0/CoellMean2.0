@@ -27,4 +27,12 @@ export class GroupService {
     delete(id: string) {
         return this.http.delete(appConfig.apiUrl + '/group/' + id);
     }
+
+    joinGroup(group: Group){
+        return this.http.post(appConfig.apiUrl + '/group/' + group.id + '/join',group);
+    }
+
+    leaveGroup(group: Group) {
+        return this.http.post(appConfig.apiUrl + '/group/' + group.id + '/leave', group);
+    }
 }

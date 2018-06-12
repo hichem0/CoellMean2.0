@@ -14,9 +14,8 @@ var index_1 = require("../_services/index");
 var router_1 = require("@angular/router");
 require("rxjs/add/operator/filter");
 var GroupdetailsComponent = /** @class */ (function () {
-    function GroupdetailsComponent(groupService, userService, route, alertService, router, authService, activatedRoute) {
+    function GroupdetailsComponent(groupService, route, alertService, router, authService, activatedRoute) {
         this.groupService = groupService;
-        this.userService = userService;
         this.route = route;
         this.alertService = alertService;
         this.router = router;
@@ -27,13 +26,14 @@ var GroupdetailsComponent = /** @class */ (function () {
     GroupdetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.getGroup();
-        this.loadAllUsers();
         this.route.queryParams
             .filter(function (params) { return params.groupname; })
             .subscribe(function (params) {
             _this.groupName = params.groupname;
         });
-        this.currentUser = this.authService.user;
+        this.authService.me().subscribe(function (user) {
+            _this.setUser(user);
+        });
     };
     GroupdetailsComponent.prototype.getGroup = function () {
         var _this = this;
@@ -45,10 +45,6 @@ var GroupdetailsComponent = /** @class */ (function () {
                 }
             }
         });
-    };
-    GroupdetailsComponent.prototype.loadAllUsers = function () {
-        var _this = this;
-        this.userService.getAll().subscribe(function (users) { _this.users = users; });
     };
     GroupdetailsComponent.prototype.addUserAtGroup = function (username) {
         var _this = this;
@@ -95,7 +91,48 @@ var GroupdetailsComponent = /** @class */ (function () {
     };
     GroupdetailsComponent.prototype.deleteGroup = function () {
         var _this = this;
-        this.groupService.delete(this.group.id).subscribe(function () { _this.router.navigate(['/mygroups']); });
+        if (confirm("Confirmer la suppresion du group ? ")) {
+            this.groupService.delete(this.group.id).subscribe(function () { _this.router.navigate(['/mygroups']); });
+        }
+    };
+    GroupdetailsComponent.prototype.join = function () {
+        var _this = this;
+        this.groupService.joinGroup(this.group)
+            .subscribe(function (data) {
+            _this.alertService.success('Vous avez rejoint le groupe', true);
+            _this.group.users.push(_this.currentUser);
+        }, function (error) {
+            _this.alertService.error(error);
+            _this.loading = false;
+        });
+    };
+    GroupdetailsComponent.prototype.leave = function () {
+        var _this = this;
+        if (confirm('Confirmer le départ du groupe ?')) {
+            this.groupService.leaveGroup(this.group)
+                .subscribe(function (data) {
+                _this.router.navigate(['/mygroups']);
+            }, function (error) {
+                //this.alertService.error(error);
+                _this.loading = false;
+            });
+        }
+    };
+    GroupdetailsComponent.prototype.back = function () {
+        this.router.navigate(['/mygroups']);
+    };
+    GroupdetailsComponent.prototype.beMember = function () {
+        var flag = false;
+        for (var _i = 0, _a = this.group.users; _i < _a.length; _i++) {
+            var user = _a[_i];
+            if (user.username === this.currentUser.username) {
+                flag = true;
+            }
+        }
+        return flag;
+    };
+    GroupdetailsComponent.prototype.setUser = function (user) {
+        this.currentUser = user;
     };
     GroupdetailsComponent = __decorate([
         core_1.Component({
@@ -103,7 +140,6 @@ var GroupdetailsComponent = /** @class */ (function () {
             templateUrl: 'groupdetails.component.html'
         }),
         __metadata("design:paramtypes", [index_1.GroupService,
-            index_1.UserService,
             router_1.ActivatedRoute,
             index_1.AlertService,
             router_1.Router,

@@ -1,0 +1,46 @@
+.group-title {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.title-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.join {
+    background-color: #00b500;
+    color: whitesmoke;
+    height: 30px;
+    width: 80px;
+ }
+
+.leave {
+    background-color: #be0400;
+    color: whitesmoke;
+    height: 30px;
+    width: 80px;
+
+}
+
+.back {
+    background-color: #f8f6f7;
+    height: 30px;
+    width: 80px;
+
+}
+
+.title {
+    font-size: 32px;
+    font-weight: bold;
+}
