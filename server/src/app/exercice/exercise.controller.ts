@@ -1,10 +1,10 @@
 import { ApiBearerAuth, ApiImplicitParam, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import {Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post} from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ExerciceService } from './exercice.component';
 import { Exercice } from './exercise.entity';
 import { Group } from '../group/group.entity';
-import {User} from '../user/user.entity';
-import {UserConnected} from '../../decorator/user.decorator';
+import { User } from '../user/user.entity';
+import { UserConnected } from '../../decorator/user.decorator';
 
 @ApiUseTags('Exo management')
 @Controller('exo')

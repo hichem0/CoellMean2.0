@@ -1,7 +1,7 @@
-import {InjectRepository} from '@nestjs/typeorm';
-import {WordPair} from './wordPair.entity';
-import {Repository} from 'typeorm';
-import {Component} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { WordPair } from './wordPair.entity';
+import { Repository } from 'typeorm';
+import { Component } from '@nestjs/common';
 
 @Component()
 export class WordPairService {

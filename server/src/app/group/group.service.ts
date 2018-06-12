@@ -1,10 +1,10 @@
-import {Component, NotFoundException, UnauthorizedException} from '@nestjs/common';
+import { Component, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import Optional from 'typescript-optional';
 import { User } from '../user/user.entity';
 import { Group } from './group.entity';
-import {uniqFilter} from '../utils';
+import { uniqFilter } from '../utils';
 
 @Component()
 export class GroupService {

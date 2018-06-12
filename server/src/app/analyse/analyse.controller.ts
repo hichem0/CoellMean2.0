@@ -1,11 +1,11 @@
-import {ApiBearerAuth, ApiImplicitParam, ApiResponse, ApiUseTags} from '@nestjs/swagger';
-import {Body, Controller, Get, NotFoundException, Param, Post} from '@nestjs/common';
-import {AnalyseStudentDto} from '../dto/analyse.student.dto';
-import {UserConnected} from '../../decorator/user.decorator';
-import {Analyse} from './analyse.entity';
-import {User} from '../user/user.entity';
-import {AnalyseService} from './analyse.service';
-import {AnalyseCorrectorDto} from '../dto/analyse.corrector.dto';
+import { ApiBearerAuth, ApiImplicitParam, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { AnalyseStudentDto } from '../dto/analyse.student.dto';
+import { UserConnected } from '../../decorator/user.decorator';
+import { Analyse } from './analyse.entity';
+import { User } from '../user/user.entity';
+import { AnalyseService } from './analyse.service';
+import { AnalyseCorrectorDto } from '../dto/analyse.corrector.dto';
 
 @ApiUseTags('Analyse management')
 @Controller()

@@ -1,11 +1,11 @@
-import {Component, NotFoundException} from '@nestjs/common';
+import { Component, NotFoundException } from '@nestjs/common';
 import Optional from 'typescript-optional';
 import { Repository } from 'typeorm';
 import { Exercice } from './exercise.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from '../group/group.entity';
-import {GroupService} from '../group/group.service';
-import {uniqFilter} from '../utils';
+import { GroupService } from '../group/group.service';
+import { uniqFilter } from '../utils';
 
 @Component()
 export class ExerciceService {

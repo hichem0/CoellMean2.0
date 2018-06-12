@@ -13,10 +13,10 @@ import { Exercice } from './exercice/exercise.entity';
 import { ExerciceService } from './exercice/exercice.component';
 import { ExerciseController } from './exercice/exercise.controller';
 import { WordPair } from './wordPair/wordPair.entity';
-import {WordPairService} from './wordPair/wordPair.service';
-import {Analyse} from './analyse/analyse.entity';
-import {AnalyseController} from './analyse/analyse.controller';
-import {AnalyseService} from './analyse/analyse.service';
+import { WordPairService } from './wordPair/wordPair.service';
+import { Analyse } from './analyse/analyse.entity';
+import { AnalyseController } from './analyse/analyse.controller';
+import { AnalyseService } from './analyse/analyse.service';
 
 @Module({
     imports: [

@@ -6,8 +6,8 @@ import { AppModule } from './app/app.module';
 import { AuthModule } from './auth/auth.module';
 import { UserController } from './app/user/user.controller';
 import { GroupController } from './app/group/group.controller';
-import {ExerciseController} from './app/exercice/exercise.controller';
-import {AnalyseController} from './app/analyse/analyse.controller';
+import { ExerciseController } from './app/exercice/exercise.controller';
+import { AnalyseController } from './app/analyse/analyse.controller';
 
 @Module({
     imports: [

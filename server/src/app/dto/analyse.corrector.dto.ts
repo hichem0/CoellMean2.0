@@ -1,5 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import {IsNumber, IsPositive, Min} from 'class-validator';
+import { IsNumber, IsPositive, Min } from 'class-validator';
 
 export class AnalyseCorrectorDto {
 

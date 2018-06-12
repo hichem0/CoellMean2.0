@@ -1,9 +1,9 @@
 import { DbAuditModel } from '../../util/dbmodel.model';
-import {Column, Entity, ManyToOne} from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty } from 'class-validator';
-import {Analyse} from '../analyse/analyse.entity';
-import {Exclude} from 'class-transformer';
+import { Analyse } from '../analyse/analyse.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class WordPair extends DbAuditModel {

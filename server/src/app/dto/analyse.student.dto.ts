@@ -15,7 +15,7 @@ export class AnalyseStudentDto {
     argumentation: string;
 
     @IsArray()
-    @ApiModelProperty({ required: true, type: WordPair, isArray: true})
+    @ApiModelProperty({ required: true, type: WordPair, isArray: true })
     vocabulaire: WordPair[];
 
     @IsArray()
