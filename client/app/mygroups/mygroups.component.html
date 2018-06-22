@@ -1,17 +1,44 @@
 <link href="mygroups.component.css" rel="stylesheet" />
 <div>
-    <h1>Bonjour {{currentUser.username}}!</h1>
+    <h1>Groupe dont vous êtes administrateur</h1>
 
-    <div class="groups-container" *ngIf="groups">
-        <div *ngFor="let group of groups">
-            <div class="group-card" *ngIf="currentUser && group.adminname === currentUser.username" (click)="goToGroupDetails(group.groupname)">
-                <h2>{{group.groupname}}</h2>
-                par {{group.adminname}}
-                <div><a (click)="deleteGroup(group._id)">X</a></div>
+    <div class="groups-container" *ngIf="currentUser && myGroups">
+        <div *ngFor="let group of myGroups">
+            <div class="group-card" (click)="goToGroupDetails(group.groupname)">
+                <div>{{group.groupname}}</div>
             </div>
         </div>
     </div>
-    <span *ngIf="!groups">Vous n'avez aucun groupe ...</span>
+    <div class="groups-container" *ngIf=" currentUser && myGroups.length === 0">
+        Vous êtes administrateur d'aucun groupe
+    </div>
+
+    <h1>Groupes dont vous êtes membre</h1>
+    <div class="groups-container" *ngIf="currentUser && memberGroups">
+        <div *ngFor="let group of memberGroups">
+            <div class="group-card" (click)="goToGroupDetails(group.groupname)">
+                <div>{{group.groupname}}</div>
+                <div class="creator">par {{group.admin.username}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="groups-container" *ngIf="currentUser && memberGroups.length === 0">
+        Vous êtes membre d'aucun groupe
+    </div>
+
+    <h1>Autres groupes</h1>
+    <div class="groups-container" *ngIf="currentUser && otherGroups">
+        <div *ngFor="let group of otherGroups">
+            <div class="group-card" (click)="goToGroupDetails(group.groupname)">
+                <div>{{group.groupname}}</div>
+                <div class="creator">par {{group.admin.username}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="groups-container" *ngIf="currentUser && otherGroups.length === 0">
+        Aucun autre groupe à afficher ...
+    </div>
+
     <p><a [routerLink]="['/group/create']">Créer un groupe</a></p>
     <p><a [routerLink]="['']">Accueil</a></p>
 </div>

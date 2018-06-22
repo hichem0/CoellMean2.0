@@ -13,28 +13,61 @@ var core_1 = require("@angular/core");
 var index_1 = require("../_services/index");
 var router_1 = require("@angular/router");
 var MygroupsComponent = /** @class */ (function () {
-    function MygroupsComponent(groupService, router, activatedRoute) {
+    function MygroupsComponent(groupService, router, activatedRoute, authenticationService) {
         this.groupService = groupService;
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.authenticationService = authenticationService;
         this.groups = [];
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     MygroupsComponent.prototype.ngOnInit = function () {
         this.loadAllGroups();
     };
-    MygroupsComponent.prototype.deleteGroup = function (_id) {
-        var _this = this;
-        this.groupService.delete(_id).subscribe(function () { _this.loadAllGroups(); });
+    MygroupsComponent.prototype.repartGroups = function () {
+        this.myGroups = [];
+        this.memberGroups = [];
+        this.otherGroups = [];
+        for (var _i = 0, _a = this.groups; _i < _a.length; _i++) {
+            var group = _a[_i];
+            if (group.admin.username === this.currentUser.username) {
+                this.myGroups.push(group);
+            }
+            else if (this.beMember(group)) {
+                this.memberGroups.push(group);
+            }
+            else if (!this.beMember(group) && group.admin.username !== this.currentUser.username) {
+                this.otherGroups.push(group);
+            }
+        }
     };
     MygroupsComponent.prototype.loadAllGroups = function () {
         var _this = this;
-        this.groupService.getAll().subscribe(function (groups) { _this.groups = groups; });
+        this.groupService.getAll().subscribe(function (groups) {
+            _this.groups = groups;
+            _this.authenticationService.me()
+                .subscribe(function (user) {
+                _this.setUser(user);
+            });
+        });
     };
     MygroupsComponent.prototype.goToGroupDetails = function (groupname) {
         var queryParams = Object.assign({}, this.activatedRoute.snapshot.queryParams);
         queryParams['groupname'] = groupname;
         this.router.navigate(['/group'], { queryParams: queryParams });
+    };
+    MygroupsComponent.prototype.beMember = function (group) {
+        var flag = false;
+        for (var _i = 0, _a = group.users; _i < _a.length; _i++) {
+            var user = _a[_i];
+            if (user.username === this.currentUser.username) {
+                flag = true;
+            }
+        }
+        return flag;
+    };
+    MygroupsComponent.prototype.setUser = function (user) {
+        this.currentUser = user;
+        this.repartGroups();
     };
     MygroupsComponent = __decorate([
         core_1.Component({
@@ -43,7 +76,8 @@ var MygroupsComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [index_1.GroupService,
             router_1.Router,
-            router_1.ActivatedRoute])
+            router_1.ActivatedRoute,
+            index_1.AuthenticationService])
     ], MygroupsComponent);
     return MygroupsComponent;
 }());

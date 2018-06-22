@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {AlertService, AnalyseService, ExerciceService} from '../_services/index';
-import {Exercice, Paire, User} from "../_models/index";
+import {AlertService, AnalyseService, AuthenticationService, ExerciceService} from '../_services/index';
+import {Analyse, Exercice, Paire, User} from "../_models/index";
 
 @Component({
     moduleId: module.id,
@@ -10,104 +10,166 @@ import {Exercice, Paire, User} from "../_models/index";
 })
 
 export class AnalyseformComponent implements OnInit{
-    analyse: any = {};
-    vocabulaire: Paire[];
-    traduction: Paire[];
-    grammaire: Paire[];
-    ideeGlobales: string[];
-    liens: string[];
+    beforeExist: boolean = false;
+    correction: boolean = false;
+    analyse: Analyse;
+    // langue: string = "english";
+    // vocabulaire: Paire[] = [];
+    // traduction: Paire[] = [];
+    // grammaire: Paire[] = [];
+    // ideeGlobales: string[] = [];
+    // liens: string[] = [];
     loading = false;
     paire: Paire;
     currentUser: User;
-    exercice: any;
-    motS: string;
-    syn: string;
-    motT: string;
-    trad: string;
-    motG: string;
-    anaG: string;
-    ig: string;
-    lien: string;
+    exercice: Exercice;
+    motS: string = "";
+    syn: string = "";
+    motT: string = "";
+    trad: string = "";
+    motG: string = "";
+    anaG: string = "";
+    ig: string = "";
+    lien: string = "";
 
     constructor(
         private router: Router,
         private analyseService: AnalyseService,
         private exerciceService: ExerciceService,
         private alertService: AlertService,
-        private route: ActivatedRoute) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        private route: ActivatedRoute,
+        private authenticationService: AuthenticationService) {
     }
 
     ngOnInit(): void {
+        this.initAnalyse();
+        if(this.route.snapshot.url[0].path == 'correction'){
+            this.correction = true;
+        }
         this.route.queryParams
-            .filter(params => params.id)
+            .filter(params => params.idArticle)
             .subscribe(params => {
-                this.analyse.idarticle = params.id;
+                this.analyse.idarticle = params.idArticle;
                 this.loadExercice();
             });
-        this.vocabulaire = [];
-        this.traduction = [];
-        this.grammaire = [];
-        this.ideeGlobales = [];
-        this.liens = [];
+        this.route.queryParams
+            .filter(params => params.idAnalyse)
+            .subscribe(params => {
+                this.analyse.id = params.idAnalyse;
+                this.loadAnalyse();
+            });
+        // this.vocabulaire = [];
+        // this.traduction = [];
+        // this.grammaire = [];
+        // this.ideeGlobales = [];
+        // this.liens = [];
+        this.authenticationService.me().subscribe( user => {
+            this.setUser(user);
+        });
     }
 
-    loadExercice(): void{
+    loadExercice(): void {
         this.exerciceService.getById(this.analyse.idarticle)
             .subscribe(
-                data => {
-                    this.exercice = data; });
+                exercice => {
+                    this.exercice = exercice;
+                });
     }
 
-    addVoc(): void{
+    loadAnalyse(): void {
+        this.analyseService.getById(this.analyse.id)
+            .subscribe(
+                analyse => {
+                    this.analyse = analyse;
+                    this.exercice = this.analyse.exercice;
+                    this.analyse.idarticle = this.exercice.id;
+                    this.beforeExist = true;
+                }
+            )
+    }
+
+    initAnalyse(): void {
+        this.analyse = new Analyse();
+        this.analyse.tradution = [];
+        this.analyse.vocabulaire = [];
+        this.analyse.grammaire = [];
+        this.analyse.globalIdea = [];
+        this.analyse.liensExterne = [];
+    }
+
+    addVoc(): void {
         if (this.motS !== "" && this.syn !== "") {
-            this.paire = {mot1: this.motS, mot2: this.syn};
-            this.vocabulaire.push(this.paire)
+            this.paire = {"key": this.motS, "value": this.syn};
+            this.analyse.vocabulaire.push(this.paire)
             this.motS = "";
             this.syn = "";
         }
     }
 
-    addTrad(): void{
+    removeVoc(item: Paire): void {
+        if(confirm('supprimer la réponse ?')) {
+            this.analyse.vocabulaire.splice(this.analyse.vocabulaire.indexOf(item,0),1);
+        }
+    }
+
+    addTrad(): void {
         if (this.motT !== "" && this.trad !== "") {
-            this.paire = {mot1: this.motT, mot2: this.trad};
-            this.traduction.push(this.paire)
+            this.paire = {"key": this.motT, "value": this.trad};
+            this.analyse.tradution.push(this.paire)
             this.motT = "";
             this.trad = "";
         }
     }
 
-    addGramm(): void{
+    removeTrad(item: Paire): void {
+        if(confirm('supprimer la réponse ?')) {
+            this.analyse.tradution.splice(this.analyse.tradution.indexOf(item,0),1);
+        }
+    }
+
+    addGramm(): void {
         if (this.motG !== "" && this.anaG !== "") {
-            this.paire = {mot1: this.motG, mot2: this.anaG};
-            this.grammaire.push(this.paire)
+            this.paire = {"key": this.motG, "value": this.anaG};
+            this.analyse.grammaire.push(this.paire)
             this.motG = "";
             this.anaG = "";
         }
     }
 
-    addIG(): void{
+    removeGramm(item: Paire): void {
+        if(confirm('supprimer la réponse ?')) {
+            this.analyse.grammaire.splice(this.analyse.grammaire.indexOf(item,0),1);
+        }
+    }
+
+    addIG(): void {
         if(this.ig !== ""){
-            this.ideeGlobales.push(this.ig);
+            this.analyse.globalIdea.push(this.ig);
             this.ig = "";
         }
     }
 
-    addLink(): void{
+    removeIG(item: string): void {
+        if(confirm('supprimer la réponse ?')) {
+            this.analyse.globalIdea.splice(this.analyse.globalIdea.indexOf(item,0),1);
+        }
+    }
+
+    addLink(): void {
         if(this.lien !== ""){
-            this.liens.push(this.lien);
+            this.analyse.liensExterne.push(this.lien);
             this.lien = "";
         }
     }
 
-    createAnalyse(): void{
+    removeLink(item: string): void {
+        if(confirm('supprimer le lien ?')) {
+            this.analyse.liensExterne.splice(this.analyse.liensExterne.indexOf(item,0),1);
+        }
+    }
+
+    createAnalyse(): void {
         this.loading = true;
-        this.analyse.createur = this.currentUser.username;
-        this.analyse.vocabulaire = this.vocabulaire;
-        this.analyse.traduction = this.traduction;
-        this.analyse.groupName = this.grammaire;
-        this.analyse.ig = this.ideeGlobales;
-        this.analyse.liensExterne = this.liens;
         this.analyseService.create(this.analyse)
             .subscribe(
                 data => {
@@ -119,4 +181,34 @@ export class AnalyseformComponent implements OnInit{
                     this.loading = false;
                 });
     }
+
+    noteAnalyse(): void {
+        this.loading = true;
+        this.analyseService.grade(this.analyse) .subscribe(
+            data => {
+                this.alertService.success('Correction validée', true);
+                this.router.navigate(['/myanalyses']);
+            },
+            error => {
+                this.alertService.error(error);
+                this.loading = false;
+            });
+    }
+
+    back() {
+        if(confirm('Quitter la page ?')){
+            this.router.navigate(['/mygroups']);
+        }
+    }
+
+    private setUser(user: User) {
+        this.currentUser = user;
+    }
+
+    getMaxGrade() {
+        return this.exercice.maxGradeVocab + this.exercice.maxGradeArgumentation
+        + this.exercice.maxGradeExternalLinks + this.exercice.maxGradeGlobalIdee
+        + this.exercice.maxGradeTrad + this.exercice.maxGradeGramar;
+    }
+
 }

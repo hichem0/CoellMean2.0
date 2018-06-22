@@ -17,19 +17,22 @@ var ExerciceService = /** @class */ (function () {
         this.http = http;
     }
     ExerciceService.prototype.getAll = function () {
-        return this.http.get(app_config_1.appConfig.apiUrl + '/exercices');
+        return this.http.get(app_config_1.appConfig.apiUrl + '/exo');
     };
-    ExerciceService.prototype.getById = function (_id) {
-        return this.http.get(app_config_1.appConfig.apiUrl + '/exercices/' + _id);
+    ExerciceService.prototype.getById = function (id) {
+        return this.http.get(app_config_1.appConfig.apiUrl + '/exo/' + id);
     };
     ExerciceService.prototype.create = function (exercice) {
-        return this.http.post(app_config_1.appConfig.apiUrl + '/exercices/create', exercice);
+        return this.http.post(app_config_1.appConfig.apiUrl + '/exo', exercice);
     };
-    ExerciceService.prototype.update = function (exercice) {
-        return this.http.put(app_config_1.appConfig.apiUrl + '/exercices/' + exercice._id, exercice);
+    ExerciceService.prototype.delete = function (id) {
+        return this.http.delete(app_config_1.appConfig.apiUrl + '/exo/' + id);
     };
-    ExerciceService.prototype.delete = function (_id) {
-        return this.http.delete(app_config_1.appConfig.apiUrl + '/exercices/' + _id);
+    ExerciceService.prototype.linkTo = function (exercice, group) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/exo/' + exercice.id + '/linkTo/' + group.id, exercice);
+    };
+    ExerciceService.prototype.unlinkTo = function (exercice, group) {
+        return this.http.post(app_config_1.appConfig.apiUrl + '/exo/' + exercice.id + '/unlinkTo/' + group.id, exercice);
     };
     ExerciceService = __decorate([
         core_1.Injectable(),

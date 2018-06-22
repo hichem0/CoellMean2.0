@@ -12,83 +12,149 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var index_1 = require("../_services/index");
+var index_2 = require("../_models/index");
 var AnalyseformComponent = /** @class */ (function () {
-    function AnalyseformComponent(router, analyseService, exerciceService, alertService, route) {
+    function AnalyseformComponent(router, analyseService, exerciceService, alertService, route, authenticationService) {
         this.router = router;
         this.analyseService = analyseService;
         this.exerciceService = exerciceService;
         this.alertService = alertService;
         this.route = route;
-        this.analyse = {};
+        this.authenticationService = authenticationService;
+        this.beforeExist = false;
+        this.correction = false;
+        // langue: string = "english";
+        // vocabulaire: Paire[] = [];
+        // traduction: Paire[] = [];
+        // grammaire: Paire[] = [];
+        // ideeGlobales: string[] = [];
+        // liens: string[] = [];
         this.loading = false;
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.motS = "";
+        this.syn = "";
+        this.motT = "";
+        this.trad = "";
+        this.motG = "";
+        this.anaG = "";
+        this.ig = "";
+        this.lien = "";
     }
     AnalyseformComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.initAnalyse();
+        if (this.route.snapshot.url[0].path == 'correction') {
+            this.correction = true;
+        }
         this.route.queryParams
-            .filter(function (params) { return params.id; })
+            .filter(function (params) { return params.idArticle; })
             .subscribe(function (params) {
-            _this.analyse.idarticle = params.id;
+            _this.analyse.idarticle = params.idArticle;
             _this.loadExercice();
         });
-        this.vocabulaire = [];
-        this.traduction = [];
-        this.grammaire = [];
-        this.ideeGlobales = [];
-        this.liens = [];
+        this.route.queryParams
+            .filter(function (params) { return params.idAnalyse; })
+            .subscribe(function (params) {
+            _this.analyse.id = params.idAnalyse;
+            _this.loadAnalyse();
+        });
+        // this.vocabulaire = [];
+        // this.traduction = [];
+        // this.grammaire = [];
+        // this.ideeGlobales = [];
+        // this.liens = [];
+        this.authenticationService.me().subscribe(function (user) {
+            _this.setUser(user);
+        });
     };
     AnalyseformComponent.prototype.loadExercice = function () {
         var _this = this;
         this.exerciceService.getById(this.analyse.idarticle)
-            .subscribe(function (data) {
-            _this.exercice = data;
+            .subscribe(function (exercice) {
+            _this.exercice = exercice;
         });
+    };
+    AnalyseformComponent.prototype.loadAnalyse = function () {
+        var _this = this;
+        this.analyseService.getById(this.analyse.id)
+            .subscribe(function (analyse) {
+            _this.analyse = analyse;
+            _this.exercice = _this.analyse.exercice;
+            _this.analyse.idarticle = _this.exercice.id;
+            _this.beforeExist = true;
+        });
+    };
+    AnalyseformComponent.prototype.initAnalyse = function () {
+        this.analyse = new index_2.Analyse();
+        this.analyse.tradution = [];
+        this.analyse.vocabulaire = [];
+        this.analyse.grammaire = [];
+        this.analyse.globalIdea = [];
+        this.analyse.liensExterne = [];
     };
     AnalyseformComponent.prototype.addVoc = function () {
         if (this.motS !== "" && this.syn !== "") {
-            this.paire = { mot1: this.motS, mot2: this.syn };
-            this.vocabulaire.push(this.paire);
+            this.paire = { "key": this.motS, "value": this.syn };
+            this.analyse.vocabulaire.push(this.paire);
             this.motS = "";
             this.syn = "";
         }
     };
+    AnalyseformComponent.prototype.removeVoc = function (item) {
+        if (confirm('supprimer la réponse ?')) {
+            this.analyse.vocabulaire.splice(this.analyse.vocabulaire.indexOf(item, 0), 1);
+        }
+    };
     AnalyseformComponent.prototype.addTrad = function () {
         if (this.motT !== "" && this.trad !== "") {
-            this.paire = { mot1: this.motT, mot2: this.trad };
-            this.traduction.push(this.paire);
+            this.paire = { "key": this.motT, "value": this.trad };
+            this.analyse.tradution.push(this.paire);
             this.motT = "";
             this.trad = "";
         }
     };
+    AnalyseformComponent.prototype.removeTrad = function (item) {
+        if (confirm('supprimer la réponse ?')) {
+            this.analyse.tradution.splice(this.analyse.tradution.indexOf(item, 0), 1);
+        }
+    };
     AnalyseformComponent.prototype.addGramm = function () {
         if (this.motG !== "" && this.anaG !== "") {
-            this.paire = { mot1: this.motG, mot2: this.anaG };
-            this.grammaire.push(this.paire);
+            this.paire = { "key": this.motG, "value": this.anaG };
+            this.analyse.grammaire.push(this.paire);
             this.motG = "";
             this.anaG = "";
         }
     };
+    AnalyseformComponent.prototype.removeGramm = function (item) {
+        if (confirm('supprimer la réponse ?')) {
+            this.analyse.grammaire.splice(this.analyse.grammaire.indexOf(item, 0), 1);
+        }
+    };
     AnalyseformComponent.prototype.addIG = function () {
         if (this.ig !== "") {
-            this.ideeGlobales.push(this.ig);
+            this.analyse.globalIdea.push(this.ig);
             this.ig = "";
+        }
+    };
+    AnalyseformComponent.prototype.removeIG = function (item) {
+        if (confirm('supprimer la réponse ?')) {
+            this.analyse.globalIdea.splice(this.analyse.globalIdea.indexOf(item, 0), 1);
         }
     };
     AnalyseformComponent.prototype.addLink = function () {
         if (this.lien !== "") {
-            this.liens.push(this.lien);
+            this.analyse.liensExterne.push(this.lien);
             this.lien = "";
+        }
+    };
+    AnalyseformComponent.prototype.removeLink = function (item) {
+        if (confirm('supprimer le lien ?')) {
+            this.analyse.liensExterne.splice(this.analyse.liensExterne.indexOf(item, 0), 1);
         }
     };
     AnalyseformComponent.prototype.createAnalyse = function () {
         var _this = this;
         this.loading = true;
-        this.analyse.createur = this.currentUser.username;
-        this.analyse.vocabulaire = this.vocabulaire;
-        this.analyse.traduction = this.traduction;
-        this.analyse.groupName = this.grammaire;
-        this.analyse.ig = this.ideeGlobales;
-        this.analyse.liensExterne = this.liens;
         this.analyseService.create(this.analyse)
             .subscribe(function (data) {
             _this.alertService.success('Analyse remise pour correction', true);
@@ -97,6 +163,30 @@ var AnalyseformComponent = /** @class */ (function () {
             _this.alertService.error(error);
             _this.loading = false;
         });
+    };
+    AnalyseformComponent.prototype.noteAnalyse = function () {
+        var _this = this;
+        this.loading = true;
+        this.analyseService.grade(this.analyse).subscribe(function (data) {
+            _this.alertService.success('Correction validée', true);
+            _this.router.navigate(['/myanalyses']);
+        }, function (error) {
+            _this.alertService.error(error);
+            _this.loading = false;
+        });
+    };
+    AnalyseformComponent.prototype.back = function () {
+        if (confirm('Quitter la page ?')) {
+            this.router.navigate(['/mygroups']);
+        }
+    };
+    AnalyseformComponent.prototype.setUser = function (user) {
+        this.currentUser = user;
+    };
+    AnalyseformComponent.prototype.getMaxGrade = function () {
+        return this.exercice.maxGradeVocab + this.exercice.maxGradeArgumentation
+            + this.exercice.maxGradeExternalLinks + this.exercice.maxGradeGlobalIdee
+            + this.exercice.maxGradeTrad + this.exercice.maxGradeGramar;
     };
     AnalyseformComponent = __decorate([
         core_1.Component({
@@ -107,7 +197,8 @@ var AnalyseformComponent = /** @class */ (function () {
             index_1.AnalyseService,
             index_1.ExerciceService,
             index_1.AlertService,
-            router_1.ActivatedRoute])
+            router_1.ActivatedRoute,
+            index_1.AuthenticationService])
     ], AnalyseformComponent);
     return AnalyseformComponent;
 }());

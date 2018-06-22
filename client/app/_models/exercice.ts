@@ -1,16 +1,20 @@
+import {User} from "./user";
+import {Analyse} from "./analyse";
+
 export class Exercice {
-    _id: string;
-    titre: string;
-    contenu: string;
-    datePublication: string;
+    id: string;
+    title: string;
+    articleContenu: string;
+    publishDate: string;
     source: string;
-    createur: string;
-    domaine: string;
-    langue: string;
-    noteVocabulaire: string;
-    noteTraduction: string;
-    noteGrammaire: string;
-    noteIG: string;
-    noteArgumentation: string;
-    noteLiens: string;
+    creator: User;
+    domain: string;
+    lang: string;
+    maxGradeVocab: number;
+    maxGradeTrad: number;
+    maxGradeGramar: number;
+    maxGradeGlobalIdee: number;
+    maxGradeArgumentation: number;
+    maxGradeExternalLinks: number;
+    resolutions: Analyse[];
 }

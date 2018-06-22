@@ -1,0 +1,137 @@
+th {
+    text-align: center;
+    color: #309cca;
+}
+
+.group-title {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.group-detail {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.title-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.join {
+    background-color: #00b500;
+    color: whitesmoke;
+    height: 30px;
+    width: 80px;
+ }
+
+.leave {
+    background-color: #be0400;
+    color: whitesmoke;
+    height: 30px;
+    width: 80px;
+
+}
+
+.back {
+    background-color: #f8f6f7;
+    height: 30px;
+    width: 80px;
+
+}
+
+.title {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.user-list {
+    background-color: whitesmoke;
+    padding: 20px;
+    box-shadow: 3px 3px 10px;
+    height: 400px;
+    width: 170px;
+    overflow: scroll;
+}
+
+.table-user {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    width: 100%;
+}
+
+.tr-users:hover {
+    background-color: #afecff;
+
+}
+
+.exo-list {
+    background-color: whitesmoke;
+    padding: 20px;
+    box-shadow: 3px 3px 10px;
+    height: 400px;
+    width: 220px;
+    overflow: scroll;
+}
+
+.table-exo {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    width: 100%;
+}
+
+.tr-exo:hover {
+    background-color: #afecff;
+
+}
+
+
+.analyse-list {
+    background-color: whitesmoke;
+    padding: 20px;
+    box-shadow: 3px 3px 10px;
+    height: 400px;
+    width: 220px;
+    overflow: scroll;
+}
+
+.table-analyse {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    width: 100%;
+}
+
+.tr-analyse:hover {
+    background-color: #afecff;
+
+}
+
+.kicker {
+    color: #ff002b;
+    cursor: pointer;
+}
+
+.exo-adder {
+    color: #00cf3c;
+    cursor: pointer;
+}
+
+.todo {
+    color: #e79600;
+}
+
+.doing {
+    color: #00b500;
+}

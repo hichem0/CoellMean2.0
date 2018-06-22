@@ -1,8 +1,10 @@
 import {User} from "./user";
+import {Exercice} from "./exercice";
 
 export class Group {
-    _id: string;
+    admin : User;
+    id: string;
     groupname: string;
-    adminname: string;
     users: User[];
+    exercices: Exercice[];
 }

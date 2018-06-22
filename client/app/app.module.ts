@@ -9,7 +9,7 @@ import { routing }        from './app.routing';
 import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { JwtInterceptorProvider, ErrorInterceptorProvider } from './_helpers/index';
-import { AlertService, AuthenticationService, UserService } from './_services/index';
+import {AlertService, AnalyseService, AuthenticationService, ExerciceService, UserService} from './_services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
@@ -19,6 +19,7 @@ import {GroupformComponent} from "./groupform/index";
 import {GroupdetailsComponent} from "./groupdetails/index";
 import {ExerciceformComponent} from "./exerciceform/index";
 import {ProfilComponent} from "./profil/index";
+import {AnalyseformComponent} from "./analyseform/analyseform.component";
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import {ProfilComponent} from "./profil/index";
         GroupdetailsComponent,
         ExerciceformComponent,
         ProfilComponent,
+        AnalyseformComponent,
     ],
     providers: [
         AuthGuard,
@@ -45,6 +47,8 @@ import {ProfilComponent} from "./profil/index";
         AuthenticationService,
         UserService,
         GroupService,
+        AnalyseService,
+        ExerciceService,
         JwtInterceptorProvider,
         ErrorInterceptorProvider
     ],

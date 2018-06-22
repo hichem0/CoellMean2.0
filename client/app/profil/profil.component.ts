@@ -2,7 +2,7 @@
 import {ActivatedRoute, Router } from '@angular/router';
 
 import {User} from '../_models/index';
-import { AlertService, UserService } from '../_services/index';
+import { AlertService, UserService, AuthenticationService } from '../_services/index';
 import {currentId} from "async_hooks";
 
 @Component({
@@ -19,11 +19,12 @@ export class ProfilComponent implements OnInit{
         private router: Router,
         private userService: UserService,
         private alertService: AlertService,
-        private activatedRoute: ActivatedRoute) {
-            this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        private activatedRoute: ActivatedRoute,
+        private authenticationService: AuthenticationService) {
         }
 
     ngOnInit() {
+        this.currentUser = this.authenticationService.user;
     }
 
     updateUser() {
