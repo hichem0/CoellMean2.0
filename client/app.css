@@ -1,4 +1,4 @@
-﻿a {
+a {
     cursor: pointer;
 }
 
@@ -24,4 +24,35 @@ body {
 
 .help-block {
     font-size: 12px;
+}
+
+.bg-dark {
+    background-color: #412fe9f6!important;
+}
+
+a.logo {
+    color: white;
+    font-family: 'Anton', sans-serif;
+    font-size: 2em;
+}
+
+a.logo:link {
+    text-decoration: none;
+}
+
+.navbar-nav {
+    margin-left: 40%;
+}
+
+.nav-item {
+    margin-right: 6px;
+    font-family: 'Anton', sans-serif;
+    color: white;
+    font-size: 2vh;
+    width: 170px;
+}
+
+img {
+    height: 120px;
+    width: 300px;
 }
