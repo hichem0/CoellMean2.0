@@ -18,19 +18,19 @@
 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/mygroups"> Gestion de groupes </a>
+                <a class="nav-link" [routerLink]="['/mygroups']"> Gestion de groupes </a>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/exercice/create"> Création exercice </a>
+                <a class="nav-link" [routerLink]="['/exercice/create']"> Création exercice </a>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/profil"> Editer Profil </a>
+                <a class="nav-link" [routerLink]="['/profil']"> Editer Profil </a>
 
             </li>
             <li class="nav-item">
-                <a onclick="logout()" class="nav-link"> Déconnexion </a>
+                <a (click)="logout()" class="nav-link"> Déconnexion </a>
 
             </li>
         </ul>
@@ -38,7 +38,7 @@
 </nav>
 
 <!-- main app container -->
-<div class="jumbotron">
+<div>
     <div class="container">
         <div class="col-sm-8 col-sm-offset-2">
             <alert></alert>
