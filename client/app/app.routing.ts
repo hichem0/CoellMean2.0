@@ -13,7 +13,7 @@ import {AnalyseformComponent} from "./analyseform/analyseform.component";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent },
+    // { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'mygroups', component: MygroupsComponent},
     { path: 'group/create', component: GroupformComponent},
