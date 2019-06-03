@@ -10,28 +10,34 @@
   <span class="navbar-toggler-icon"></span>
 </button>
 
-    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+    <div  class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item" style="margin-right:-70px">
+            <li *ngIf="userConnected()" class="nav-item" style="margin-right:-70px">
                 <a class="item-props nav-link" href="/"> Accueil </a>
 
             </li>
-            <li class="nav-item">
+            <li *ngIf="userConnected()" class="nav-item" >
                 <a class="nav-link" [routerLink]="['/mygroups']"> Gestion de groupes </a>
 
             </li>
-            <li class="nav-item">
+            <li *ngIf="userConnected()" class="nav-item">
                 <a class="nav-link" [routerLink]="['/exercice/create']"> Création exercice </a>
 
             </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/profil']"> Editer Profil </a>
+            <li *ngIf="userConnected()" class="nav-item">
+                <a class="nav-link" [routerLink]="['/profil']"> Editer profil </a>
 
             </li>
-            <li class="nav-item" style="margin-left:-50px">
-                <a (click)="logout()" class="nav-link"> Déconnexion </a>
 
+            <li *ngIf="userConnected() && currentUser.isProfesseur" class="nav-item">
+                <a class="nav-link" [routerLink]="['/register']"> Créer un profil </a>
+
+            </li>
+
+            <li *ngIf="userConnected()" class="nav-item" style="margin-left:-50px">
+                <a (click)="logout()" class="nav-link"> Déconnexion </a>
+                
             </li>
         </ul>
     </div>

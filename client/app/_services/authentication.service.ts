@@ -14,7 +14,7 @@ export class AuthenticationService {
 
     user : any;
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router) { 
         this.user = this.me();
     }
 
@@ -41,8 +41,7 @@ export class AuthenticationService {
         return this.http.get<User>(appConfig.apiUrl + '/auth/me')
             .map(user => {
                 this.user = user;
-
                 return user;
-            })
+            });
     }
 }

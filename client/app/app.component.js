@@ -21,6 +21,9 @@ var AppComponent = /** @class */ (function () {
         this.loadAllUsers();
         this.currentUser = this.authenticationService.user;
     };
+    AppComponent.prototype.ngDoCheck = function () {
+        this.currentUser = this.authenticationService.user;
+    };
     AppComponent.prototype.deleteUser = function (id) {
         var _this = this;
         this.userService.delete(id).subscribe(function () { _this.loadAllUsers(); });
@@ -33,6 +36,17 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.logout = function () {
         this.authenticationService.logout();
+    };
+    AppComponent.prototype.userConnected = function () {
+        return null != this.currentUser && undefined != this.currentUser.username;
+    };
+    AppComponent.prototype.userProfesseur = function () {
+        if (this.userConnected) {
+            if (this.currentUser.isProfesseur) {
+                return true;
+            }
+        }
+        return false;
     };
     AppComponent = __decorate([
         core_1.Component({

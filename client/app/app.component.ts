@@ -21,6 +21,10 @@ export class AppComponent implements OnInit{
         this.currentUser = this.authenticationService.user;
     }
 
+    ngDoCheck(){
+        this.currentUser = this.authenticationService.user; 
+    }
+
     deleteUser(id: string) {
         this.userService.delete(id).subscribe(() => { this.loadAllUsers() });
     }
@@ -35,6 +39,21 @@ export class AppComponent implements OnInit{
 
     logout() {
         this.authenticationService.logout();
+    }
+
+    userConnected(){  
+        return null != this.currentUser && undefined != this.currentUser.username;
+    }
+
+    userProfesseur(){
+        if(this.userConnected) {
+            if(this.currentUser.isProfesseur) {
+                return true;
+            }                
+        }
+        
+        return false;
+    
     }
 
 }
