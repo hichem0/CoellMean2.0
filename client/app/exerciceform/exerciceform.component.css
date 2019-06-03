@@ -41,3 +41,15 @@
 .dynamic-element {
     margin-bottom: 0px;
 }
+
+.groups-container {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+    font-size: 18px;
+}
+
+.tainer {
+    display: flex;
+    width: 110em;
+}
