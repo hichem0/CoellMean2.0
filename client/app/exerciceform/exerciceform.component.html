@@ -11,7 +11,7 @@
             </div> 
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !datePublication.valid }">
                 <label for="publishDate">Date de publication</label>
-                <input type="text" class="form-control" name="publishDate" [(ngModel)]="exercice.publishDate" #datePublication="ngModel" required />
+                <input type="date" class="form-control" name="publishDate" [(ngModel)]="exercice.publishDate" #datePublication="ngModel" required />
                 <div *ngIf="f.submitted && !datePublication.valid" class="help-block">Date de publication requise</div>
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !source.valid }">
