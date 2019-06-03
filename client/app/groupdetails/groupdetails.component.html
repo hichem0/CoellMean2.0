@@ -2,7 +2,7 @@
 <div class="group-title" *ngIf="group && currentUser">
     <div class="title-area">
         <div>
-            <div class="title">{{group.groupname}}</div>
+            <h1>{{group.groupname}}</h1>
             <div>par {{group.admin.username}}</div>
         </div>
     </div>
@@ -14,75 +14,69 @@
     </div>
 </div>
 <div class="group-detail" *ngIf=" group && currentUser">
-    <div class="user-list">
-        <table class="table-user">
-            <tr>
-                <th>MEMBRES</th>
-            </tr>
-            <tr *ngIf="group.users.length === 0">
-                <td>Aucun membre dans ce groupe ...</td>
-            </tr>
-            <tr *ngFor="let user of group.users" class="tr-users">
-                <td>{{user.username}}</td>
-                <td *ngIf="group.admin.username === currentUser.username" (click)="kick(user)" class="kicker">X</td>
-            </tr>
-        </table>
-    </div>
-    <div class="exo-list">
-        <table class="table-exo">
-            <tr>
-                <th>EXERCICES A FAIRE</th>
-            </tr>
-            <tr *ngIf="group.exercices.length === 0">
-                <td>Aucun exercice affecté à ce groupe ...</td>
-            </tr>
-            <tr *ngFor="let exercice of group.exercices" class="tr-exo">
-                <td *ngIf="group.admin.username === currentUser.username || !beMember()">{{exercice.title}}</td>
-                <td *ngIf="group.admin.username !== currentUser.username && beMember()" (click)="goAnalyse(exercice.id)">{{exercice.title}}</td>
-                <td *ngIf="group.admin.username === currentUser.username" (click)="delExo(exercice)" class="kicker">X</td>
-            </tr>
-        </table>
-    </div>
-    <div class="exo-list" *ngIf="group.admin.username === currentUser.username">
-        <table class="table-exo">
-            <tr>
-                <th>LIBRAIRIE D'EXERCICES</th>
-            </tr>
-            <tr *ngIf="libExo.length === 0">
-                <td>Aucun exercice disponible ...</td>
-            </tr>
-            <tr *ngFor="let exercice of libExo" class="tr-exo">
-                <td>{{exercice.title}}</td>
-                <td *ngIf="group.admin.username === currentUser.username" (click)="addExo(exercice)" class="exo-adder">+</td>
-            </tr>
-        </table>
-    </div>
-    <div class="analyse-list" *ngIf=" !loading && currentUser && group && myAnalyses && group.admin.username !== currentUser.username && beMember()">
-        <table class="table-analyse">
-            <tr>
-                <th>MES ANALYSES</th>
-            </tr>
-            <tr *ngIf="myAnalyses && myAnalyses.length === 0">
-                <td>Aucune analyse disponible ...</td>
-            </tr>
-            <tr *ngFor="let analyse of myAnalyses" class="tr-exo">
-                <td  *ngIf="analyse.totalScore === -1" (click)="modifAnalyse(analyse)"><span class="todo">TODO</span> {{analyse.titleArticle}}</td>
-                <td  *ngIf="analyse.totalScore > -1" (click)="corriger(analyse)"><span class="doing">√</span> {{analyse.titleArticle}}</td>
-            </tr>
-        </table>
-    </div>
-    <div class="analyse-list" *ngIf=" !loading && currentUser && group && myAnalyses && group.admin.username == currentUser.username">
-        <table class="table-analyse">
-            <tr>
-                <th>ANALYSES DU GROUPE</th>
-            </tr>
-            <tr *ngIf="myAnalyses && myAnalyses.length === 0">
-                <td>Aucune analyse disponible ...</td>
-            </tr>
-            <tr *ngFor="let analyse of myAnalyses" class="tr-exo">
-                <td  *ngIf="analyse.totalScore === -1" (click)="corriger(analyse)"><span class="todo">TODO</span> {{analyse.titleArticle}}</td>
-                <td  *ngIf="analyse.totalScore > -1" (click)="corriger(analyse)"><span class="doing">√</span> {{analyse.titleArticle}}</td>
-            </tr>
-        </table>
-    </div>
+
+    <tabset #tabset>
+        <tab heading="Exercices">
+            <table class="table-exo">
+                    <tr>
+                        <th>EXERCICES A FAIRE</th>
+                    </tr>
+                    <tr *ngIf="group.exercices.length === 0">
+                        <td>Aucun exercice affecté à ce groupe ...</td>
+                    </tr>
+                    <tr *ngFor="let exercice of group.exercices" class="tr-exo">
+                        <td *ngIf="group.admin.username === currentUser.username || !beMember()">{{exercice.title}}</td>
+                        <td *ngIf="group.admin.username !== currentUser.username && beMember()" (click)="goAnalyse(exercice.id)">{{exercice.title}}</td>
+                        <td *ngIf="group.admin.username === currentUser.username" (click)="delExo(exercice)" class="kicker">X</td>
+                    </tr>
+                </table>
+        </tab> 
+        
+        <tab heading="Analyses">
+                         <table class="table-analyse">
+                            <tr>
+                                <th>ANALYSES DU GROUPE</th>
+                            </tr>
+                            <tr *ngIf="myAnalyses && myAnalyses.length === 0">
+                                <td>Aucune analyse disponible ...</td>
+                            </tr>
+                            <tr *ngFor="let analyse of myAnalyses" class="tr-exo">
+                                <td  *ngIf="analyse.totalScore === -1" (click)="corriger(analyse)"><span class="todo">TODO</span> {{analyse.titleArticle}}</td>
+                                <td  *ngIf="analyse.totalScore > -1" (click)="corriger(analyse)"><span class="doing">√</span> {{analyse.titleArticle}}</td>
+                            </tr>
+                        </table>
+   
+        </tab>
+
+        <tab heading="Libraire d'exercices">
+                <table class="table-exo">
+                        <tr>
+                            <th>LIBRAIRIE D'EXERCICES</th>
+                        </tr>
+                        <tr *ngIf="libExo.length === 0">
+                            <td>Aucun exercice disponible ...</td>
+                        </tr>
+                        <tr *ngFor="let exercice of libExo" class="tr-exo">
+                            <td>{{exercice.title}}</td>
+                            <td *ngIf="group.admin.username === currentUser.username" (click)="addExo(exercice)" class="exo-adder">+</td>
+                        </tr>
+                    </table>
+        </tab>
+
+        <tab heading="Membres">
+            <table class="table-user">
+                    <tr>
+                        <th>MEMBRES</th>
+                    </tr>
+                    <tr *ngIf="group.users.length === 0">
+                        <td>Aucun membre dans ce groupe ...</td>
+                    </tr>
+                    <tr *ngFor="let user of group.users" class="tr-users">
+                        <td>{{user.username}}</td>
+                        <td *ngIf="group.admin.username === currentUser.username" (click)="kick(user)" class="kicker">X</td>
+                    </tr>
+                </table>
+        </tab>
+    </tabset>
+
 </div>

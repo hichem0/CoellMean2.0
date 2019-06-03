@@ -10,6 +10,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/common/http");
+var tabs_1 = require("ngx-bootstrap/tabs");
 var app_component_1 = require("./app.component");
 var app_routing_1 = require("./app.routing");
 var index_1 = require("./_directives/index");
@@ -35,7 +36,8 @@ var AppModule = /** @class */ (function () {
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
                 http_1.HttpClientModule,
-                app_routing_1.routing
+                app_routing_1.routing,
+                tabs_1.TabsModule.forRoot()
             ],
             declarations: [
                 app_component_1.AppComponent,
