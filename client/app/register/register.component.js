@@ -19,6 +19,7 @@ var RegisterComponent = /** @class */ (function () {
         this.alertService = alertService;
         this.model = {};
         this.loading = false;
+        this.model.isProfesseur = false;
     }
     RegisterComponent.prototype.register = function () {
         var _this = this;

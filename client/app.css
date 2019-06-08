@@ -41,20 +41,20 @@ a.logo:link {
 }
 
 .navbar-nav {
-    margin-left: 40%;
+    margin-left: 32%;
 }
 
 .nav-item {
     margin-right: 6px;
     font-family: 'Anton', sans-serif;
     color: white;
-    font-size: 2vh;
+    font-size: 1.5vh;
     width: 170px;
 }
 
-img {
-    height: 500px;
-    width: 1200px;
+.im {
+    height: 480px;
+    width: 1000px;
 }
 
 .grid-container {
@@ -94,6 +94,16 @@ img {
 }
 
 .marge {
-    margin-top: 10vh;
-    margin-left: -20vh;
+    margin-top: 15vh;
+    margin-left: -05vh;
+}
+
+.i {
+    height: 70px;
+    width: 120px;
+}
+
+.login {
+    height: 100%;
+    width: 100%;
 }

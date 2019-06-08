@@ -1,4 +1,9 @@
+td {
+    font-size: 3vh;
+}
+
 th {
+    font-size: 4vh;
     text-align: center;
     color: #309cca;
 }
@@ -35,21 +40,19 @@ th {
     color: whitesmoke;
     height: 30px;
     width: 80px;
- }
+}
 
 .leave {
     background-color: #be0400;
     color: whitesmoke;
     height: 30px;
     width: 80px;
-
 }
 
 .back {
     background-color: #f8f6f7;
     height: 30px;
     width: 80px;
-
 }
 
 .title {
@@ -74,7 +77,6 @@ th {
 
 .tr-users:hover {
     background-color: #afecff;
-
 }
 
 .exo-list {
@@ -94,9 +96,7 @@ th {
 
 .tr-exo:hover {
     background-color: #afecff;
-
 }
-
 
 .analyse-list {
     background-color: whitesmoke;
@@ -115,7 +115,6 @@ th {
 
 .tr-analyse:hover {
     background-color: #afecff;
-
 }
 
 .kicker {

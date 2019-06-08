@@ -29,6 +29,9 @@ export class User extends DbAuditModel{
     @Column({ unique: true })
     username: string;
 
+    @Column({ nullable: true })
+    isProfesseur: boolean;
+
     @ManyToMany(type => Authority, authority => authority.users, {
         eager: true,
         cascadeUpdate: true,

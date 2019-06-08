@@ -14,10 +14,11 @@
                 <div>{{group.groupname}}</div>
             </div>
         </div>
+        <div class="groups-container" *ngIf=" currentUser && myGroups.length === 0">
+            Vous êtes administrateur d'aucun groupe
+        </div>
     </div>
-    <div class="groups-container" *ngIf=" currentUser && myGroups.length === 0">
-        Vous êtes administrateur d'aucun groupe
-    </div>
+
 
 
     <div class="groups-container" *ngIf="currentUser && memberGroups">

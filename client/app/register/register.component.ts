@@ -15,7 +15,9 @@ export class RegisterComponent {
     constructor(
         private router: Router,
         private userService: UserService,
-        private alertService: AlertService) { }
+        private alertService: AlertService) {
+            this.model.isProfesseur = false;
+        }
 
     register() {
         this.loading = true;

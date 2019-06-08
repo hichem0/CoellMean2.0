@@ -8,15 +8,10 @@
                 <label for="title">Titre de l'article</label>
                 <input type="text" class="form-control" name="title" [(ngModel)]="exercice.title" #titre="ngModel" required />
                 <div *ngIf="f.submitted && !titre.valid" class="help-block">Titre requis</div>
-            </div>
-            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contenu.valid }">
-                <label for="articleContenu">Contenu de l'article</label>
-                <input type="textarea" class="form-control" name="articleContenu" [(ngModel)]="exercice.articleContenu" #contenu="ngModel" required />
-                <div *ngIf="f.submitted && !contenu.valid" class="help-block">Contenu requis</div>
-            </div>
+            </div> 
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !datePublication.valid }">
                 <label for="publishDate">Date de publication</label>
-                <input type="text" class="form-control" name="publishDate" [(ngModel)]="exercice.publishDate" #datePublication="ngModel" required />
+                <input type="date" class="form-control" name="publishDate" [(ngModel)]="exercice.publishDate" #datePublication="ngModel" required />
                 <div *ngIf="f.submitted && !datePublication.valid" class="help-block">Date de publication requise</div>
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !source.valid }">
@@ -31,8 +26,18 @@
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !langue.valid }">
                 <label for="lang">Langue de l'article</label>
-                <input type="text" class="form-control" name="lang" [(ngModel)]="exercice.lang" #langue="ngModel" required />
+                <select class="form-control" name="lang" ng-model="lang" [(ngModel)]="exercice.lang" #langue="ngModel" required>
+                    <option value="deuch">Deutsch</option>
+                    <option value="english">English</option>
+                    <option value="spainish">Español</option>
+                    <option value="french">Français</option>
+                </select>
                 <div *ngIf="f.submitted && !langue.valid" class="help-block">Langue requise</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contenu.valid }">
+                <label for="articleContenu">Contenu de l'article</label>
+                <textarea class="form-control" name="articleContenu" [(ngModel)]="exercice.articleContenu" #contenu="ngModel" required> </textarea>
+                <div *ngIf="f.submitted && !contenu.valid" class="help-block">Contenu requis</div>
             </div>
 
             <div>

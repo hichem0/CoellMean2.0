@@ -1,5 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsEmail, IsMobilePhone, IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsNotEmpty, IsString, Length, IsBoolean } from 'class-validator';
 
 export class UserRegisterDto {
 
@@ -21,4 +21,7 @@ export class UserRegisterDto {
     @ApiModelProperty({ required: true })
     @IsNotEmpty()
     username: string;
+
+    @IsBoolean()
+    isProfesseur: boolean;
 }

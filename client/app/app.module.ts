@@ -2,6 +2,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TabsModule } from 'ngx-bootstrap/tabs';  
+
+
 
 import { AppComponent }  from './app.component';
 import { routing }        from './app.routing';
@@ -26,7 +29,9 @@ import {AnalyseformComponent} from "./analyseform/analyseform.component";
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        routing
+        routing, 
+        TabsModule.forRoot()
+
     ],
     declarations: [
         AppComponent,

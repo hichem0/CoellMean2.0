@@ -1,14 +1,14 @@
 .page {
     width: 100%;
-    padding: 5px;
-    margin: 10px;
-    margin-left: 0px;
-    box-shadow: 3px 3px 10px;
+    /* padding: 5px;
+    /* margin: 10px; */
+    /* margin-left: 0px; */
+    /* box-shadow: 3px 3px 10px;
     background-color: rgba(194, 194, 194, 0.65);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #373737;
+    color: #373737;  */
 }
 
 .page h2 {
@@ -26,7 +26,7 @@
     color: whitesmoke;
     cursor: pointer;
     padding-left: 8px;
-    padding-right: 8px ;
+    padding-right: 8px;
     padding-bottom: 4px;
     border-radius: 50%;
 }

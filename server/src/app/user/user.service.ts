@@ -65,6 +65,7 @@ export class UserService {
         user.username = userDto.username;
         user.firstName = userDto.firstName;
         user.lastName = userDto.lastName;
+        user.isProfesseur = userDto.isProfesseur;
         user.password = this.getHashString(userDto.password);
         return this.userRepository.save(user);
     }
